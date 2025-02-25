@@ -19,7 +19,7 @@ These instructions will get you a copy of the project up and running on your loc
 The project directory structure is 
 
 
-'''hbnb/
+```hbnb/
 ├── app/
 │   ├── __init__.py
 │   ├── api/
@@ -46,7 +46,7 @@ The project directory structure is
 ├── config.py
 ├── requirements.txt
 ├── README.md
-'''
+```
 **Explanation:**
 
     - The `app/` directory contains the core application code.
