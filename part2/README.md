@@ -73,25 +73,25 @@ What things you need to install the software and how to install them.
 
    Python packages are as below and listed in requirements.txt 
 
-    ```
+```bash
     flask
     flask-restx
-    ```
+```
 ### Installing
 
-    It is recommended to install and run packages in the virtual environment so that correct packages/library versions are consistently used every time the software runs
+It is recommended to install and run packages in the virtual environment so that correct packages/library versions are consistently used every time the software runs
 
-    Please refer to https://phoenixnap.com/kb/install-flask for detailed information on installing virtualenv module and activating the virtual enviroment.
+Please refer to https://phoenixnap.com/kb/install-flask for detailed information on installing virtualenv module and activating the virtual enviroment.
    
-    Install the dependencies using:
+Install the dependencies using:
 
-    ```
+```bash
     pip install -r requirements.txt
-    ```
+```
 
 
 ## Usage <a name = "usage"></a>
 
-    ```
-    python run.py
-    ```
+```bash
+    python3 run.py
+```
