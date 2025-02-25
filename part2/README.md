@@ -46,15 +46,15 @@ The project directory structure is
 ```
 **Explanation:**
 
-    - The `app/` directory contains the core application code.
-    - The `api/` subdirectory houses the API endpoints, organized by version (`v1/`).
-    - The `models/` subdirectory contains the business logic classes (e.g., `user.py`, `place.py`).
-    - The `services/` subdirectory is where the Facade pattern is implemented, managing the interaction between layers.
-    - The `persistence/` subdirectory is where the in-memory repository is implemented. This will later be replaced by a database-backed solution using SQL Alchemy.
-    - `run.py` is the entry point for running the Flask application.
-    - `config.py` will be used for configuring environment variables and application settings.
-    - `requirements.txt` will list all the Python packages needed for the project.
-    - `README.md` will contain a brief overview of the project.
+     The `app/` directory contains the core application code.
+     The `api/` subdirectory houses the API endpoints, organized by version (`v1/`).
+     The `models/` subdirectory contains the business logic classes (e.g., `user.py`, `place.py`).
+     The `services/` subdirectory is where the Facade pattern is implemented, managing the interaction between layers.
+     The `persistence/` subdirectory is where the in-memory repository is implemented. This will later be replaced by a database-backed solution using SQL Alchemy.
+     `run.py` is the entry point for running the Flask application.
+     `config.py` will be used for configuring environment variables and application settings.
+     `requirements.txt` will list all the Python packages needed for the project.
+     `README.md` will contain a brief overview of the project.
 
 ## Getting Started <a name = "getting_started"></a>
 
@@ -73,7 +73,7 @@ What things you need to install the software and how to install them.
 
    Python packages are as below and listed in requirements.txt 
 
-    ```text
+    ```
     flask
     flask-restx
     ```
@@ -85,13 +85,13 @@ What things you need to install the software and how to install them.
    
     Install the dependencies using:
 
-    ```bash
+    ```
     pip install -r requirements.txt
     ```
 
 
 ## Usage <a name = "usage"></a>
 
-    ```Execute
+    ```
     python run.py
     ```
