@@ -11,24 +11,24 @@
     updated_at (DateTime): Timestamp when the review is last updated.
 """
 class Review(BaseModel): 
-    def __init__(self, id, text, rating, place, user, created_at, updated_at):
-    super(),__init__()
-    self.id = id
-    self.text = text
-    self.rating = rating
-    self.place = place
-    self.user = user
-    self.created_at = created_at
-    self.updated_at = updated_at
-    
-def create_review(self):
-    pass
+    def __init__(self, text, rating, place, user):
+        super().__init__()
+        self.text = text
+        self.rating = rating
+        self.place = place
+        self.user = user
+   
+    def create_review(self):
+        # if id in self.id:
+        pass
 
-def update_reviw(self):
-    pass
-    
-def delete_review(self):
-    pass
+        # return (f"Review {self.id} created")
 
-def list_review(self):
-    pass
+    def update_review(self):
+        return 
+    
+    def delete_review(self):
+        pass
+
+    def list_review(self):
+        pass
