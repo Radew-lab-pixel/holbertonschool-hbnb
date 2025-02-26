@@ -11,10 +11,10 @@ user_model = api.model('User', {
 })
 
 @api.route('/')
-class UserList(Resource):
+class UserList(Resource):  # this is due to Flask.Restex format
     @api.expect(user_model, validate=True)
-    @api.response(201, 'User successfully created')
-    @api.response(400, 'Email already registered')
+    @api.response(201, 'User successfully created')  # not meant for us for this project, use in swagger
+    @api.response(400, 'Email already registered')  # but just follow the format 
     @api.response(400, 'Invalid input data')
     def post(self):
         """Register a new user"""
@@ -29,7 +29,7 @@ class UserList(Resource):
         return {'id': new_user.id, 'first_name': new_user.first_name, 'last_name': new_user.last_name, 'email': new_user.email}, 201
     
 @api.route('/<user_id>')
-class UserResource(Resource):
+class UserResource(Resource):  # this is special as instead of def , class is used
     @api.response(200, 'User details retrieved successfully')
     @api.response(404, 'User not found')
     def get(self, user_id):
@@ -38,4 +38,6 @@ class UserResource(Resource):
         if not user:
             return {'error': 'User not found'}, 404
         return {'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'email': user.email}, 200
+    
+
 

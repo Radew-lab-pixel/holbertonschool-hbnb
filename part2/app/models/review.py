@@ -25,7 +25,7 @@ class Review(BaseModel):
         # return (f"Review {self.id} created")
 
     def update_review(self):
-        return 
+        pass 
     
     def delete_review(self):
         pass
