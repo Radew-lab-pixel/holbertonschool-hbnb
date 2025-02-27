@@ -15,4 +15,4 @@ class Amenity(BaseModel):
             return response
         else: 
             """Delete amenity from storage"""
-            self.delete        
+            self.delete

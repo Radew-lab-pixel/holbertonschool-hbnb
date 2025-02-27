@@ -21,7 +21,7 @@ class User(BaseModel):
 
     @property
     def first_name(self):
-        return self._first_name
+        return self.__first_name
     
     @first_name.setter
     def first_name(self, first_name_input):

@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+from app.models.base_model import BaseModel
 
 """
     id (String): Unique identifier for each review.

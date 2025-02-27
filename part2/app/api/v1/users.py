@@ -21,7 +21,7 @@ class UserList(Resource):  # this is due to Flask.Restex format
         user_data = api.payload
 
         # Simulate email uniqueness check (to be replaced by real validation with persistence)
-        existing_user = facade.get_user_by_email(user_data['email'])
+        existing_user = facade.get_user_by_email(user_data['email'])   # in fascade directory
         if existing_user:
             return {'error': 'Email already registered'}, 400
 
