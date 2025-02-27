@@ -8,4 +8,11 @@ class Amenity(BaseModel):
     
     def delete(self):
         """Delete amenity"""
-        pass
+        # pass
+        if self.name is None:
+            response = make_response ("Amenity not found")
+            response.status_code = 401
+            return response
+        else: 
+            """Delete amenity from storage"""
+            self.delete
