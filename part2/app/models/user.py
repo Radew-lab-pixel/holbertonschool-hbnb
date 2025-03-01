@@ -11,14 +11,6 @@ class User(BaseModel):
         self.places = [] # List of places owned by user
         self.reviews = [] # List of reviews posted by user
 
-    def register(self):
-        """Register a user to the application"""
-        pass
-
-    def delete(self):
-        """Delete user from application"""
-        pass
-
     @property
     def first_name(self):
         return self.__first_name
@@ -40,7 +32,7 @@ class User(BaseModel):
             raise TypeError('Last name must be string')
         else:
             self.__last_name = last_name_input
-    
+
     @property
     def email(self):
         return self.__email
