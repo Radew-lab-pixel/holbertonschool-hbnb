@@ -1,4 +1,4 @@
-from flask_restx import Namespace, Resource, fields
+from flask_restx import Namespace, Resource, fields, marshal_with
 from app.services import facade
 
 api = Namespace('places', description='Place operations')
@@ -30,6 +30,7 @@ place_model = api.model('Place', {
 @api.route('/')
 class PlaceList(Resource):
     @api.expect(place_model)
+    @api.marshal_with(place_model)  # decorator
     @api.response(201, 'Place successfully created')
     @api.response(400, 'Invalid input data')
     def post(self):
@@ -42,6 +43,7 @@ class PlaceList(Resource):
         return place_created, 201
 
     @api.response(200, 'List of places retrieved successfully')
+    @api.marshal_with(place_model)  # decorator
     def get(self):
         """Retrieve a list of all places"""
         # Placeholder for logic to return a list of all places
@@ -50,6 +52,7 @@ class PlaceList(Resource):
 
 @api.route('/<place_id>')
 class PlaceResource(Resource):
+    @api.marshal_with(place_model)  # decorator
     @api.response(200, 'Place details retrieved successfully')
     @api.response(404, 'Place not found')
     def get(self, place_id):
@@ -59,6 +62,7 @@ class PlaceResource(Resource):
         return place_list, 200
 
     @api.expect(place_model)
+    @api.marshal_with(place_model)  # decorator
     @api.response(200, 'Place updated successfully')
     @api.response(404, 'Place not found')
     @api.response(400, 'Invalid input data')
