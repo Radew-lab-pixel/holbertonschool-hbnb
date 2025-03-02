@@ -43,16 +43,18 @@ class PlaceList(Resource):
         return place_created, 201
 
     @api.response(200, 'List of places retrieved successfully')
-    @api.marshal_with(place_model)  # decorator
+    # @api.marshal_with(place_model)  # decorator
+    @api.marshal_with(place_model, skip_none=True)  # for debugging, skip fields / keys if value is None
     def get(self):
         """Retrieve a list of all places"""
         # Placeholder for logic to return a list of all places
         place_list = facade.get_all_places()
         return place_list, 200
-
+    
 @api.route('/<place_id>')
 class PlaceResource(Resource):
-    @api.marshal_with(place_model)  # decorator
+    #@api.marshal_with(place_model)  # decorator
+    @api.marshal_with(place_model,skip_none=True)
     @api.response(200, 'Place details retrieved successfully')
     @api.response(404, 'Place not found')
     def get(self, place_id):
