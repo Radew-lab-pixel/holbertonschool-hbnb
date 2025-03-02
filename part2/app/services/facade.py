@@ -8,10 +8,36 @@ class HBnBFacade:
         self.amenity_repo = InMemoryRepository()
     
     ''' Users '''
-    # Placeholder method for creating a user
-    def create_user(self, user_data):
-        # Logic will be implemented in later tasks
-        return self.user_repo.add(user_data)
+    def create_user(self, user_data) -> User:
+        # create user object
+        user = User(**user_data)
+
+        # add user to in-memory repo before returning
+        self.user_repo.add(user)
+
+        return user
+    
+    def get_user_by_id(self, _id) -> Union[User, None]:
+        return self.user_repo.get(_id)
+
+    def get_user_by_email(self, email) -> Union[User, None]:
+        return self.user_repo.get_by_attribute("email", email)
+
+    def get_all_users(self) -> List[User]:
+        return self.user_repo.get_all()
+
+    def update_user(self, _id, data) -> User:        
+        self.user_repo.update(_id, data)
+        
+        # check if trying to change email to one already in use
+        if "email" in data:
+            user_with_email = self.get_user_by_email(data["email"])
+            if user_with_email and user_with_email.id != _id:
+                raise ValueError('Email must be unique')
+
+        # fetch user after update
+        updated_user = self.get_user_by_id(_id)
+        return updated_user
 
     # Placeholder method for fetching a place by ID
     # def get_place(self, place_id):
