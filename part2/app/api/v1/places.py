@@ -36,7 +36,7 @@ class PlaceList(Resource):
     def post(self):
         """Register a new place"""
         # Placeholder for the logic to register a new place                       
-        place_data = api.payload  # like request.get.json() ( get the data user sent )
+        place_data = api.payload  # like request.get.json() ( get the data user sent to server in json)
         place_created = facade.create_place(place_data)  # call create_place method in fascade module
         # return{"message" : "New place registered"}, 201  # has to be {} for return in flask
         # if place_created:
@@ -69,4 +69,7 @@ class PlaceResource(Resource):
     def put(self, place_id):
         """Update a place's information"""
         # Placeholder for the logic to update a place by ID
-        pass
+        place_data_update = api.payload    # converted to json string
+        place_updated = facade.update_place(place_id, place_data_update)
+        return place_updated, 200
+        # pass
