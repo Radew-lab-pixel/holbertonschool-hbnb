@@ -123,3 +123,4 @@ class HBnBFacade:
         review.user.reviews.remove(review)
         self.place_repo.update(review.place.id, {"reviews": review.place.reviews})
         self.user_repo.update(review.user.id, {"reviews": review.user.reviews})
+        
