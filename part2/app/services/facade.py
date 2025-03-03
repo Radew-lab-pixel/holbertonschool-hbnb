@@ -1,3 +1,5 @@
+from typing import Union, List
+
 from app.persistence.repository import InMemoryRepository
 
 from app.models.user import User
@@ -11,6 +13,10 @@ class HBnBFacade:
         self.amenity_repo = InMemoryRepository()
     
     ''' Users '''
+    def create_user(self, user_data) -> User:
+        # create user object
+        user = User(**user_data)
+
     def create_user(self, user_data) -> User:
         # create user object
         user = User(**user_data)
@@ -49,15 +55,12 @@ class HBnBFacade:
 
     ''' Amenity'''
     def create_amenity(self, amenity_data):
-        # Placeholder for logic to create an amenity
         return self.amenity_repo.add(amenity_data)
 
     def get_amenity(self, amenity_id):
-        # Placeholder for logic to retrieve an amenity by ID
         return self.amenity_repo.get(amenity_id)
 
     def get_all_amenities(self):
-        # Placeholder for logic to retrieve all amenities
         return self.amenity_repo.get_all()
 
     def update_amenity(self, amenity_id, amenity_data):
@@ -80,5 +83,3 @@ class HBnBFacade:
     def update_place(self, place_id, place_data):
     # Placeholder for logic to update a place
         return self.place_repo.update(place_id, place_data)
-    
-    
