@@ -54,7 +54,3 @@ class User(BaseModel):
             raise TypeError('Admin has to be True or False')
         else:
             self.__is_admin = is_admin_input
-    
-    
-
-    

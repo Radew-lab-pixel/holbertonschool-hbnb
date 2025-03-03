@@ -3,6 +3,7 @@ from typing import Union, List
 from app.persistence.repository import InMemoryRepository
 
 from app.models.user import User
+from typing import Union, List
 
 class HBnBFacade:
     def __init__(self):
@@ -10,6 +11,11 @@ class HBnBFacade:
         self.place_repo = InMemoryRepository()
         self.review_repo = InMemoryRepository()
         self.amenity_repo = InMemoryRepository()
+    
+    ''' Users '''
+    def create_user(self, user_data) -> User:
+        # create user object
+        user = User(**user_data)
 
     def create_user(self, user_data) -> User:
         # create user object
@@ -42,9 +48,12 @@ class HBnBFacade:
         updated_user = self.get_user_by_id(_id)
         return updated_user
 
-    def get_place(self, place_id):
-        return self.place_repo.get(place_id)
+    # Placeholder method for fetching a place by ID
+    # def get_place(self, place_id):
+        # Logic will be implemented in later tasks
+    #    return self.place_repo.get(place_id)
 
+    ''' Amenity'''
     def create_amenity(self, amenity_data):
         return self.amenity_repo.add(amenity_data)
 
@@ -55,4 +64,22 @@ class HBnBFacade:
         return self.amenity_repo.get_all()
 
     def update_amenity(self, amenity_id, amenity_data):
+        # Placeholder for logic to update an amenity
         return self.amenity_repo.update(amenity_id, amenity_data)
+    
+    '''Place'''
+    def create_place(self, place_data):
+    # Placeholder for logic to create a place, including validation for price, latitude, and longitude
+        return self.place_repo.add(place_data)
+
+    def get_place(self, place_id):
+    # Placeholder for logic to retrieve a place by ID, including associated owner and amenities
+        return self.place_repo.get(place_id)
+
+    def get_all_places(self):
+        # Placeholder for logic to retrieve all places
+        return self.place_repo.get_all()
+
+    def update_place(self, place_id, place_data):
+    # Placeholder for logic to update a place
+        return self.place_repo.update(place_id, place_data)
