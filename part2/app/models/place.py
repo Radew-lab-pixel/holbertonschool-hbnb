@@ -14,6 +14,61 @@ class Place(BaseModel):
         self.reviews = []  # List to store related reviews
         self.amenities = []  # List to store related amenities
 
+    """Add getter and setter for each instances"""
+    """title"""
+    @property
+    def title(self):
+        return self.__title
+    
+    @title.setter
+    def title(self, title_input):
+        self.__title = title_input
+        # return self.__title  # not needed in setter
+
+    """description"""
+    @property
+    def description(self)
+        return self.__description
+    
+    @description.setter
+    def description(self, description_input):
+        self.__description = description_input
+
+    """price"""
+    @property
+    def property(self):
+        return self.__price
+    
+    @price.setter
+    def price(self, price_input):
+        self.__price = price_input
+    
+    """latitude"""
+    @property
+    def latitude(self):
+        return self.__latitude
+    
+    @latitude.setter
+    def latitude(self, latitude_input):
+        self.__latitude = latitude_input
+
+    """longitude """
+    @property
+    def longitude(self):
+        return self.__longitude
+    
+    @longitude.setter
+    def longitude(self, longitude_input):
+        self.__longitude = longitude_input
+    
+    """owner"""
+    @property
+    def owner(self):
+        return self.__owner
+    
+    def owner(self, owner_input):
+        self.__owner = owner_input
+
     def add_review(self, review):
         """Add a review to the place."""
         self.reviews.append(review)
