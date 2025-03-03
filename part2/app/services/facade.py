@@ -1,5 +1,8 @@
 from app.persistence.repository import InMemoryRepository
 
+from app.models.user import User
+from typing import Union, List
+
 class HBnBFacade:
     def __init__(self):
         self.user_repo = InMemoryRepository()  # ducktyping
