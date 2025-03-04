@@ -12,8 +12,12 @@ class HBnBFacade:
         self.place_repo = InMemoryRepository()
         self.review_repo = InMemoryRepository()
         self.amenity_repo = InMemoryRepository()
+    
+    ''' Users '''
+    def create_user(self, user_data) -> User:
+        # create user object
+        user = User(**user_data)
 
-    '''Users'''
     def create_user(self, user_data) -> User:
         # create user object
         user = User(**user_data)

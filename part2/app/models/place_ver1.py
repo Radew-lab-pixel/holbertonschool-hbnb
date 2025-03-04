@@ -35,17 +35,18 @@ class Place(BaseModel):
     @property
     def title(self):
         return self.__title
-        # return self._title
-
+    
     @title.setter
     def title(self, title_input):
         self.__title = title_input
-        # self._title = title_input
         # return self.__title  # not needed in setter
+
 
     """description"""
     @property
-    def description(self):
+
+    def description(self)
+
         return self.__description
     
     @description.setter
@@ -54,7 +55,7 @@ class Place(BaseModel):
 
     """price"""
     @property
-    def price(self):
+    def property(self):
         return self.__price
     
     @price.setter
