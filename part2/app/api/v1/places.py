@@ -30,12 +30,16 @@ place_model = api.model('Place', {
 @api.route('/')
 class PlaceList(Resource):
     @api.expect(place_model)
-    @api.marshal_with(place_model, skip_none=True)  # decorator
+    # @api.marshal_with(place_model, skip_none=True)  # decorator
     @api.response(201, 'Place successfully created')
     @api.response(400, 'Invalid input data')
     def post(self):
         """Register a new place"""
         
+
+        """ Curl command
+      curl -X POST http://127.0.0.1:5000/api/v1/places/ -H "Content-Type: application/json" -d '{ "title": "Cozy Apartment","description": "A nice place to stay", "price": 100.0,"latitude": 37.7749,"longitude": -122.4194,"owner_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"}'
+    """
         
         # Placeholder for the logic to register a new place                       
              
@@ -48,7 +52,7 @@ class PlaceList(Resource):
         # print(f"{owner_id}")
         # user = facade.get_user_by_id(str(owner_id))
         
-        existing_user = facade.get_user_by_id(place_data['owner_id'])
+        existing_user = facade.get_user_by_id(place_data['owner_id'])  # existing_user is User dict
         if not existing_user:
             return {'error': 'Owner not found'}, 400
         
@@ -57,14 +61,14 @@ class PlaceList(Resource):
                     'price': place_data['price'],
                     'latitude': place_data['latitude'],
                     'longitude': place_data['longitude'],
-                    'owner': existing_user}
-        
+                    'owner': existing_user}  # owner is User class object
         # place_created = facade.create_place(place_data)  # call create_place method in fascade module
-        place_created = facade.create_place(new_dict)
+        place_created = facade.create_place(new_dict)  # place_created is place object
        
         # return{"message" : "New place registered"}, 201  # has to be {} for return in flask
         # if place_created:
         # return place_created, 201   # for debugging
+        print("Break 123")
         
         place_created_dict = {
                                 'id': str(place_created.id),
@@ -74,21 +78,33 @@ class PlaceList(Resource):
                                 'latitude': place_created.latitude,
                                 'longitude': place_created.longitude,
                                 # 'owner_id' : owner_id
-                                'owner' : owner_id
+                                'owner' : place_created.owner.id # owner is string attribute of user_id 
                                 }
         
-        
+        print(place_created_dict)
                                 
         return place_created_dict, 201
 
     @api.response(200, 'List of places retrieved successfully')
     # @api.marshal_with(place_model)  # decorator
-    @api.marshal_with(place_model, skip_none=True)  # for debugging, skip fields / keys if value is None
+    # @api.marshal_with(place_model, skip_none=True)  # for debugging, skip fields / keys if value is None
     def get(self):
         """Retrieve a list of all places"""
         # Placeholder for logic to return a list of all places
-        place_list = facade.get_all_places()
-        return place_list, 200
+        places = facade.get_all_places()  # objects places 
+
+        output_dict = []
+
+        for place in places:   # convert each attribute in places to dict values
+            output_dict.append({
+            'id': str(place.id),
+            'title': place.title,
+            'latitude': place.latitude,
+            'longitude': place.longitude,
+            })
+
+        return output_dict, 200
+        #return place_list, 200
     
 @api.route('/<place_id>')
 class PlaceResource(Resource):
@@ -99,11 +115,38 @@ class PlaceResource(Resource):
     def get(self, place_id):
         """Get place details by ID"""
         # Placeholder for the logic to retrieve a place by ID, including associated owner and amenities
-        place_list = facade.get_place(place_id)
-        return place_list, 200
+        place = facade.get_place(place_id)  # place_list is  place object
+
+        owner = place.owner
+        
+        amenities_list = []
+        for amenity in place.amenities:
+            amenities_list.append({
+                'amenity_id': str(amenity.id),
+                'name': amenity.name
+            })
+
+        output_dict = {
+                        'place_id': str(place.id),
+                        'title': place.title,
+                        'description': place.description,
+                        'latitude': place.latitude,
+                        'longitude': place.longitude,
+                        'owner': {
+                        'owner_id': str(owner.id),
+                        'first_name': owner.first_name,
+                        'last_name': owner.last_name,
+                        'email': owner.email
+            },
+            'amenities': amenities_list
+           
+        }
+        
+        return output_dict, 200
+        # return place_list, 200
 
     @api.expect(place_model)
-    @api.marshal_with(place_model)  # decorator
+    # @api.marshal_with(place_model)  # decorator
     @api.response(200, 'Place updated successfully')
     @api.response(404, 'Place not found')
     @api.response(400, 'Invalid input data')
