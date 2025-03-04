@@ -1,62 +1,105 @@
+"""API endpoints for managing reviews in the HBnB application."""
+
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
 
-api = Namespace('reviews', description='Review operations')
+review_ns = Namespace("reviews", description="Operations related to reviews")
 
-# Define the review model for input validation and documentation
-review_model = api.model('Review', {
-    'text': fields.String(required=True, description='Text of the review'),
-    'rating': fields.Integer(required=True, description='Rating of the place (1-5)'),
-    'user_id': fields.String(required=True, description='ID of the user'),
-    'place_id': fields.String(required=True, description='ID of the place')
+review_model = review_ns.model("Review", {
+    "text": fields.String(required=True, description="Review content"),
+    "rating": fields.Integer(required=True, min=1, max=5, description="Rating (1-5)"),
+    "place_id": fields.String(required=True, description="ID of the place"),
+    "user_id": fields.String(required=True, description="ID of the user"),
 })
 
-@api.route('/')
+@review_ns.route("/")
 class ReviewList(Resource):
-    @api.expect(review_model)
-    @api.response(201, 'Review successfully created')
-    @api.response(400, 'Invalid input data')
-    def post(self):
-        """Register a new review"""
-        # Placeholder for the logic to register a new review
-        pass
+    """Handles listing and creating reviews."""
 
-    @api.response(200, 'List of reviews retrieved successfully')
+    @review_ns.doc("list_reviews")
+    @review_ns.marshal_list_with(review_model)
     def get(self):
-        """Retrieve a list of all reviews"""
-        # Placeholder for logic to return a list of all reviews
-        pass
+        """Retrieve a list of all reviews."""
+        # Test this endpoint
+        # Add user
+        # curl -X GET http://localhost:5000/api/v1/reviews/ -H "Content-Type: application/json"
 
-@api.route('/<review_id>')
-class ReviewResource(Resource):
-    @api.response(200, 'Review details retrieved successfully')
-    @api.response(404, 'Review not found')
+        reviews = facade.get_all_reviews()
+        return [r.to_dict() for r in reviews], 200
+
+    @review_ns.doc("create_review")
+    @review_ns.expect(review_model)
+    @review_ns.marshal_with(review_model, code=201)
+    def post(self):
+        """Create a new review."""
+        
+        # Test this endpoint
+        # Add user
+        # curl -X POST http://localhost:5000/api/v1/users/ -H "Content-Type: application/json" -d '{"first_name": "John", "last_name": "Doe", "email": "john.doe@example.com"}'
+
+        # Add place
+        # curl -X POST http://localhost:5000/api/v1/places/ -H "Content-Type: application/json" -d '{"title": "Area 51", "description": "Aliens", "price": 1000, "latitude": 0, "longitude": 0, "owner_id": ""}'
+
+        # Add review
+        # curl -X POST http://localhost:5000/api/v1/reviews/ -H "Content-Type: application/json" -d '{"text": "Was good", "rating": 5, "user_id": "", "place_id": ""}'
+
+        data = review_ns.payload
+        try:
+            review = facade.create_review(
+                data["text"],
+                data["rating"],
+                data["place_id"],
+                data["user_id"]
+            )
+            return review.to_dict(), 201
+        except ValueError as e:
+            review_ns.abort(400, str(e))
+
+@review_ns.route("/<string:review_id>")
+class Review(Resource):
+    """Handles operations on a single review."""
+
+    @review_ns.doc("get_review")
+    @review_ns.marshal_with(review_model)
     def get(self, review_id):
-        """Get review details by ID"""
-        # Placeholder for the logic to retrieve a review by ID
-        pass
+        """Retrieve a specific review by ID."""
+        review = facade.get_review(review_id)
+        if not review:
+            review_ns.abort(404, "Review not found")
+        return review.to_dict(), 200
 
-    @api.expect(review_model)
-    @api.response(200, 'Review updated successfully')
-    @api.response(404, 'Review not found')
-    @api.response(400, 'Invalid input data')
+    @review_ns.doc("update_review")
+    @review_ns.expect(review_model)
+    @review_ns.marshal_with(review_model)
     def put(self, review_id):
-        """Update a review's information"""
-        # Placeholder for the logic to update a review by ID
-        pass
+        """Update an existing review."""
+        data = review_ns.payload
+        try:
+            review = facade.update_review(review_id, data["text"], data["rating"])
+            return review.to_dict(), 200
+        except ValueError as e:
+            review_ns.abort(404, str(e))
 
-    @api.response(200, 'Review deleted successfully')
-    @api.response(404, 'Review not found')
+    @review_ns.doc("delete_review")
+    @review_ns.marshal_with(review_model, code=204)
     def delete(self, review_id):
-        """Delete a review"""
-        # Placeholder for the logic to delete a review
-        pass
+        """Delete a review by ID."""
+        try:
+            facade.delete_review(review_id)
+            return {"message": "Review deleted"}, 204
+        except ValueError as e:
+            review_ns.abort(404, str(e))
 
-@api.route('/places/<place_id>/reviews')
-class PlaceReviewList(Resource):
-    @api.response(200, 'List of reviews for the place retrieved successfully')
-    @api.response(404, 'Place not found')
+@review_ns.route("/place/<string:place_id>")
+class PlaceReviews(Resource):
+    """Handles retrieving reviews for a specific place."""
+
+    @review_ns.doc("get_place_reviews")
+    @review_ns.marshal_list_with(review_model)
     def get(self, place_id):
-        """Get all reviews for a specific place"""
-        # Placeholder for logic to return a list of reviews for a place
-        pass
+        """Retrieve all reviews for a specific place."""
+        try:
+            reviews = facade.get_reviews_by_place(place_id)
+            return [r.to_dict() for r in reviews], 200
+        except ValueError as e:
+            review_ns.abort(404, str(e))

@@ -1,34 +1,33 @@
-#!/usr/bin/python3
 from app.models.base_model import BaseModel
+from app.models.place import Place
+from app.models.user import User
 
-"""
-    id (String): Unique identifier for each review.
-    text (String): The content of the review. Required.
-    rating (Integer): Rating given to the place, must be between 1 and 5.
-    place (Place): Place instance being reviewed. Must be validated to ensure the place exists.
-    user (User): User instance of who wrote the review. Must be validated to ensure the user exists.
-    created_at (DateTime): Timestamp when the review is created.
-    updated_at (DateTime): Timestamp when the review is last updated.
-"""
-class Review(BaseModel): 
+class Review(BaseModel):
+    """Represents a review of a place by a user in the HBnB Evolution application."""
     def __init__(self, text, rating, place, user):
         super().__init__()
+        if not text or not isinstance(text, str):
+            raise ValueError("Text is required and must be a string")
+        if not isinstance(rating, int) or rating < 1 or rating > 5:
+            raise ValueError("Rating must be an integer between 1 and 5")
+        if not isinstance(place, Place):
+            raise ValueError("A valid Place instance is required")
+        if not isinstance(user, User):
+            raise ValueError("A valid User instance is required")
+        
         self.text = text
         self.rating = rating
         self.place = place
         self.user = user
-   
-    def create_review(self):
-        # if id in self.id:
-        pass
 
-        # return (f"Review {self.id} created")
-
-    def update_review(self):
-        pass 
-    
-    def delete_review(self):
-        pass
-
-    def list_review(self):
-        pass
+    def to_dict(self):
+        """Convert the Review instance to a dictionary for JSON serialization."""
+        return {
+            "id": self.id,
+            "text": self.text,
+            "rating": self.rating,
+            "place_id": self.place.id,
+            "user_id": self.user.id,
+            "created_at": self.created_at.isoformat(),
+            "updated_at": self.updated_at.isoformat()
+        }
