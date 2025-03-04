@@ -41,6 +41,7 @@ class Place(BaseModel):
         self.__title = title_input
         # return self.__title  # not needed in setter
 
+
     """description"""
     @property
 
