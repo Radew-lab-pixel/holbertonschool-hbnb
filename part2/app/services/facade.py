@@ -3,8 +3,8 @@ from typing import Union, List
 from app.persistence.repository import InMemoryRepository
 
 from app.models.user import User
-from typing import Union, List
 from app.models.place import Place
+from app.models.amenity import Amenity
 
 class HBnBFacade:
     def __init__(self):
@@ -13,10 +13,7 @@ class HBnBFacade:
         self.review_repo = InMemoryRepository()
         self.amenity_repo = InMemoryRepository()
     
-    ''' Users '''
-    def create_user(self, user_data) -> User:
-        # create user object
-        user = User(**user_data)
+    '''Users'''
 
     def create_user(self, user_data) -> User:
         # create user object
@@ -36,7 +33,7 @@ class HBnBFacade:
     def get_all_users(self) -> List[User]:
         return self.user_repo.get_all()
 
-    def update_user(self, _id, data) -> User:        
+    def update_user(self, _id, data) -> User:
         self.user_repo.update(_id, data)
         
         # check if trying to change email to one already in use
@@ -54,19 +51,25 @@ class HBnBFacade:
         # Logic will be implemented in later tasks
     #    return self.place_repo.get(place_id)
 
-    ''' Amenity'''
-    def create_amenity(self, amenity_data):
-        return self.amenity_repo.add(amenity_data)
+    '''Amenity'''
+    def create_amenity(self, amenity_data) -> Amenity:
+        amenity = Amenity(**amenity_data)
 
-    def get_amenity(self, amenity_id):
+        self.amenity_repo.add(amenity)
+
+        return amenity
+
+    def get_amenity(self, amenity_id) -> Union[Amenity, None]:
         return self.amenity_repo.get(amenity_id)
 
-    def get_all_amenities(self):
+    def get_all_amenities(self) -> List[Amenity]:
         return self.amenity_repo.get_all()
 
-    def update_amenity(self, amenity_id, amenity_data):
-        # Placeholder for logic to update an amenity
-        return self.amenity_repo.update(amenity_id, amenity_data)
+    def update_amenity(self, amenity_id, amenity_data) -> Amenity:
+        self.amenity_repo.update(amenity_id, amenity_data)
+        
+        updated_amenity = self.amenity_repo.get(amenity_id)
+        return updated_amenity
     
     '''Place'''
     def create_place(self, place_data):
@@ -77,7 +80,6 @@ class HBnBFacade:
         self.place_repo.add(place)  # this object has to be in repo
         
         return place
-    # self.place_repo.add(place)
 
     def get_place(self, place_id):
     # Placeholder for logic to retrieve a place by ID, including associated owner and amenities
