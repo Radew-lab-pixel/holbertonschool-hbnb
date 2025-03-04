@@ -27,6 +27,7 @@ class AmenityList(Resource):
         """Retrieve a list of all amenities"""
         # Placeholder for logic to return a list of all amenities
         amenity_list = facade.get_all_amenities()
+        return amenity_list, 200
         
 
 @api.route('/<amenity_id>')
@@ -39,6 +40,8 @@ class AmenityResource(Resource):
         # Placeholder for the logic to retrieve an amenity by ID
         # amenity_data = api.payload
         amenity_list = facade.get_amenity(amenity_id)
+
+        return amenity_list, 200
 
 
     @api.expect(amenity_model)
