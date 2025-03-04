@@ -4,6 +4,7 @@ from app.persistence.repository import InMemoryRepository
 
 from app.models.user import User
 from typing import Union, List
+from app.models.place import Place
 
 class HBnBFacade:
     def __init__(self):
@@ -70,7 +71,13 @@ class HBnBFacade:
     '''Place'''
     def create_place(self, place_data):
     # Placeholder for logic to create a place, including validation for price, latitude, and longitude
-        return self.place_repo.add(place_data)
+        # user = User(**user_data)
+        place = Place(**place_data)
+        # return self.place_repo.add(place_data)
+        self.place_repo.add(place)  # this object has to be in repo
+        
+        return place
+    # self.place_repo.add(place)
 
     def get_place(self, place_id):
     # Placeholder for logic to retrieve a place by ID, including associated owner and amenities
