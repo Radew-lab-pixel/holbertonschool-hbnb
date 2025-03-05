@@ -155,5 +155,7 @@ class PlaceResource(Resource):
         # Placeholder for the logic to update a place by ID
         place_data_update = api.payload    # converted to json string
         place_updated = facade.update_place(place_id, place_data_update)
+        print('Place updated successfully')
         return place_updated, 200
+        #return {"Message: Place updated successfully"}, 200
         # pass

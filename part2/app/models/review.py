@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 from app.models.base_model import BaseModel
+import uuid
+from datetime import datetime
+
 
 """
     id (String): Unique identifier for each review.
@@ -17,7 +20,45 @@ class Review(BaseModel):
         self.rating = rating
         self.place = place
         self.user = user
+
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
    
+
+    @property
+    def text(self):
+        return self._text
+
+    @text.setter
+    def text(self, value):
+        self._text = value
+
+    @property
+    def rating(self):
+        return self._rating
+
+    @rating.setter
+    def rating(self, value):
+        self._rating = value
+       
+    @property
+    def user_id(self):
+        return self._user_id
+
+    @user_id.setter
+    def user_id(self, value):
+        self._user_id = value
+    
+    @property
+    def place_id(self):
+        return self._place_id
+
+    @place_id.setter
+    def place_id(self, value):
+        self._place_id = value
+        
+
     def create_review(self):
         # if id in self.id:
         pass

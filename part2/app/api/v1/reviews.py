@@ -19,7 +19,68 @@ class ReviewList(Resource):
     def post(self):
         """Register a new review"""
         # Placeholder for the logic to register a new review
-        pass
+        review_data = api.payload  # json list
+
+        """check if reviewer is the owner"""
+        #reviewer_user_id = review_data['user_id']  # get reviewer user id value from data parse in
+        
+        """disabled temporary for debugging
+        # reviewer_user_id = review_data.get('user_id')
+        # reviewer_place_id = review_data.get('place_id')
+        
+        existing_user = facade.get_user_by_id(review_data['user_id'])
+        existing_place = facade.get_place(review_data['place_id'])
+
+        # existing_place_owner_id = existing_place['owner_id']
+        existing_place_owner_id = existing_place.owner.id  # read owner (owner id string) from existing place object
+        if existing_place_owner_id is reviewer_user_id: # reviewer is the owner
+            return {'error' : 'Reviewer is the owner'}, 400
+        else:
+            new_dict = {'text' : review_data['text'],
+                        'rating' : review_data['rating'],
+                        #'user_id' : reviewer_user_id,
+                        #'place_id' : reviewer_place_id } 
+                        'user_id' : review_data['user_id'],
+                        'place_id': review_data['place_id']}
+            print(new_dict)
+               
+        print(new_dict)
+        review_created = facade.create_review(new_dict)
+            #review_created = facade.create_review(review_data)
+        return review_created, 201
+        #return new_dict, 201
+        """
+        owner_id = review_data.get('owner_id')  # get owner_id value
+              
+        existing_user = facade.get_user_by_id(review_data['owner_id'])  # existing_user is User dict
+        if not existing_user:
+            return {'error': 'Owner not found'}, 400
+        
+        new_dict = {'text': review_data['text'],
+                    'rating' : review_data['rating'],
+                    'user_id': review_data['user_id'],
+                    'place_id': review_data['place_id'] 
+                    }  # owner is User class object
+      
+        review_created = facade.create_review(new_dict)  # place_created is place object
+       
+        # return{"message" : "New place registered"}, 201  # has to be {} for return in flask
+        # if place_created:
+        # return place_created, 201   # for debugging
+        print("Break 123")
+        
+        place_created_dict = {
+                                'id': str(review_created.id),
+                                'text': review_created.,
+                                'rating': review_created.rating,
+                                'user_id': review_created.user_id,
+                                'place_id': review_created.place_id
+                                # 'owner_id' : owner_id
+                                }
+        
+        print(place_created_dict)
+       
+
 
     @api.response(200, 'List of reviews retrieved successfully')
     def get(self):
