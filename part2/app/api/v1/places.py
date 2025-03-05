@@ -3,6 +3,19 @@ from app.services import facade
 
 api = Namespace('places', description='Place operations')
 
+# Define the models for related entities
+amenity_model = api.model('PlaceAmenity', {
+    'id': fields.String(description='Amenity ID'),
+    'name': fields.String(description='Name of the amenity')
+})
+
+user_model = api.model('PlaceUser', {
+    'id': fields.String(description='User ID'),
+    'first_name': fields.String(description='First name of the owner'),
+    'last_name': fields.String(description='Last name of the owner'),
+    'email': fields.String(description='Email of the owner')
+})
+
 # Define the place model for input validation and documentation
 place_model = api.model('Place', {
     'title': fields.String(required=True, description='Title of the place'),
@@ -17,11 +30,7 @@ place_model = api.model('Place', {
 @api.route('/')
 class PlaceList(Resource):
     @api.expect(place_model)
-<<<<<<< HEAD
-    # @api.marshal_with(place_model, skip_none=True)
-=======
     # @api.marshal_with(place_model, skip_none=True)  # decorator
->>>>>>> 3f63f2e (Add curl command , improved /places ( places API functional)
     @api.response(201, 'Place successfully created')
     @api.response(400, 'Invalid input data')
     def post(self):
@@ -54,24 +63,6 @@ class PlaceList(Resource):
                     'longitude': place_data['longitude'],
                     'owner': existing_user}  # owner is User class object
         # place_created = facade.create_place(place_data)  # call create_place method in fascade module
-<<<<<<< HEAD
-        place_created = facade.create_place(new_dict)
-
-        # return{"message" : "New place registered"}, 201  # has to be {} for return in flask
-        # if place_created:
-        # return place_created, 201   # for debugging
-
-        place_created_dict = {
-            'id': str(place_created.id),
-            'title': place_created.title,
-            'description': place_created.description,
-            'price': place_created.price,
-            'latitude': place_created.latitude,
-            'longitude': place_created.longitude,
-            'owner_id' : owner_id
-        }
-
-=======
         place_created = facade.create_place(new_dict)  # place_created is place object
        
         # return{"message" : "New place registered"}, 201  # has to be {} for return in flask
@@ -92,7 +83,6 @@ class PlaceList(Resource):
         
         print(place_created_dict)
                                 
->>>>>>> 3f63f2e (Add curl command , improved /places ( places API functional)
         return place_created_dict, 201
 
     @api.response(200, 'List of places retrieved successfully')
@@ -169,3 +159,4 @@ class PlaceResource(Resource):
         return place_updated, 200
         #return {"Message: Place updated successfully"}, 200
         # pass
+

@@ -61,6 +61,14 @@ class HBnBFacade:
     def get_place(self, place_id) -> Union[Place, None]:
         """Retrieve a place by its ID."""
         return self.place_repo.get(place_id)
+    
+    def get_all_places(self) -> List[Place]:
+        """Retrieve all places."""
+        return self.place_repo.get_all()
+
+    def update_place(self, place_id, place_data):
+    # Placeholder for logic to update a place
+        return self.place_repo.update(place_id, place_data)
 
     def create_amenity(self, amenity_data) -> Amenity:
         """Create a new amenity and store it in the repository."""
