@@ -16,7 +16,7 @@ class User(BaseModel):
         self.is_admin = is_admin
         self.places = [] # List of places owned by user
         self.reviews = [] # List of reviews posted by user
-        self.password = password  # Added for part 3 need parameter to be declared
+        self.password = password # Added for part 3 need parameter to be declared
         # ? self.password = db.Column(db.String(128), nullable=False) # store the hash
 
     @property
@@ -63,10 +63,14 @@ class User(BaseModel):
         else:
             self.__is_admin = is_admin_input
 
-    """ Added for part 3 task 1"""
+    """ Added for part 3 task 1"""  
     @property
     def password(self):
-        return self.password
+        return self._password
+
+    @password.setter
+    def password(self, password):
+        self._password = password
 
     def hash_password(self, password):
         """ For part 3 task 1 - Hashes the password before storing it."""
