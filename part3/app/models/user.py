@@ -16,7 +16,7 @@ class User(BaseModel):
         self.is_admin = is_admin
         self.places = [] # List of places owned by user
         self.reviews = [] # List of reviews posted by user
-        self.password = password # Added for part 3 need parameter to be declared
+        self.password = None # Added for part 3 need parameter to be declared
         # ? self.password = db.Column(db.String(128), nullable=False) # store the hash
 
     @property
@@ -66,19 +66,21 @@ class User(BaseModel):
     """ Added for part 3 task 1"""  
     @property
     def password(self):
+        """For testing only not to be deployed"""
         return self._password
 
     @password.setter
     def password(self, password):
+        """For testing only not to be deployed"""
         self._password = password
 
     def hash_password(self, password):
         """ For part 3 task 1 - Hashes the password before storing it."""
-        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
+        self._password = bcrypt.generate_password_hash(password).decode('utf-8')
     
     def verify_password(self, password):
         """ For part 3 task 1- Verifies if the provided password matches the hashed password."""
-        return bcrypt.check_password_hash(self.password, password)
+        return bcrypt.check_password_hash(self._password, password)
 
 
     
