@@ -1,8 +1,7 @@
-from flask import Flask, request, make_response
+from flask import Flask
 from flask_restx import Api
 
 from flask_bcrypt import Bcrypt
-from flask_sqlalchemy import SQLAlchemy
 
 from app.api.v1.users import api as users_nst
 from app.api.v1.places import api as places_nst
@@ -10,7 +9,6 @@ from app.api.v1.amenities import api as amenities_nst
 from app.api.v1.reviews import review_ns
 
 bcrypt = Bcrypt()
-db = SQLAlchemy()
 
 def create_app(config_class="config.DevelopmentConfig"):
     app = Flask(__name__)
@@ -24,6 +22,5 @@ def create_app(config_class="config.DevelopmentConfig"):
     api.add_namespace(review_ns, path='/api/v1/reviews')
 
     bcrypt.init_app(app) # Part 3 task 1
-    db.init_app(app) # Part 3 task 6
 
     return app
