@@ -1,7 +1,8 @@
 from app.models.base_model import BaseModel
-# from flask_bcrypt import Bcrypt  # for part 3 task 1 - missing in readme.md
-# from app import bcrypt  removed due to issue due to circular depency
-from app.extensions import bcrypt  # removed import db for debugging
+
+from flask_bcrypt import Bcrypt
+
+bcrypt = Bcrypt()
 
 class User(BaseModel):
     
@@ -14,7 +15,6 @@ class User(BaseModel):
         self.places = [] # List of places owned by user
         self.reviews = [] # List of reviews posted by user
         self.password = password # Added to part 3 task 1
-        # self.password = None
 
     @property
     def first_name(self):
@@ -80,4 +80,3 @@ class User(BaseModel):
     def verify_password(self, password):
         """Verifies if the provided password matches the hashed password."""
         return bcrypt.check_password_hash(self._password, password)
-

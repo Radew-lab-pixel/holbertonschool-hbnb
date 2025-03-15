@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from app.persistence import db_session
+
 class Repository(ABC):
     @abstractmethod
     def add(self, obj):
@@ -25,28 +27,32 @@ class Repository(ABC):
     def get_by_attribute(self, attr_name, attr_value):
         pass
 
-
-class InMemoryRepository(Repository):
-    def __init__(self):
-        self._storage = {}
+class SQLAlchemyRepository(Repository):
+    def __init__(self, model):
+        self.model = model
 
     def add(self, obj):
-        self._storage[obj.id] = obj
+        db_session.add(obj)
+        db_session.commit()
 
     def get(self, obj_id):
-        return self._storage.get(obj_id)
+        return db_session.get(self.model, obj_id)
 
     def get_all(self):
-        return list(self._storage.values())
+        return db_session.query(self.model).all()
 
     def update(self, obj_id, data):
         obj = self.get(obj_id)
         if obj:
-            obj.update(data)
+            for key, value in data.items():
+                setattr(obj, key, value)
+            db_session.commit()
 
     def delete(self, obj_id):
-        if obj_id in self._storage:
-            del self._storage[obj_id]
+        obj = self.get(obj_id)
+        if obj:
+            db_session.delete(obj)
+            db_session.commit()
 
     def get_by_attribute(self, attr_name, attr_value):
-        return next((obj for obj in self._storage.values() if getattr(obj, attr_name) == attr_value), None)
+        return db_session.query(self.model).filter(getattr(self.model, attr_name) == attr_value).first()

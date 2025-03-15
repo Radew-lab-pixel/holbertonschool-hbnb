@@ -1,6 +1,5 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
-# from app.extensions import db  # disable for debugging
 
 api = Namespace('users', description='User operations')
 
