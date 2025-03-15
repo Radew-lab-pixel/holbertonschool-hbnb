@@ -7,6 +7,7 @@ from app.api.v1.reviews import review_ns
 from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt()
+db = SQLAlchemy()
 
 ## def create_app(): remove for part 3 task 0
 def create_app(config_class="config.DevelopmentConfig"):  # added for part3 task 0
