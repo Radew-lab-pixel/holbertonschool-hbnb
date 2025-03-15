@@ -1,5 +1,6 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
+# from app.extensions import db  # disable for debugging
 
 api = Namespace('users', description='User operations')
 
@@ -7,9 +8,8 @@ api = Namespace('users', description='User operations')
 user_model = api.model('User', {
     'first_name': fields.String(required=True, description='First name of the user'),
     'last_name': fields.String(required=True, description='Last name of the user'),
-    'email': fields.String(required=True, description='Email of the user')
-})
-#    'password': fields.String(required=True, description='Password of the user')})
+    'email': fields.String(required=True, description='Email of the user'),
+    'password': fields.String(required=True, description='Password of the user')})
 
 
 @api.route('/')
@@ -24,6 +24,12 @@ class UserList(Resource):
         # Test add user
         # curl -X POST http://localhost:5000/api/v1/users/ -H "Content-Type: application/json" -d '{"first_name": "John", "last_name": "Doe", "email": "john.doe@example.com"}'
         
+        """ curl command for part 3 task 1
+        curl -X POST http://localhost:5000/api/v1/users \
+        -H "Content-Type: application/json" \
+        -d '{"first_name": "John", "last_name": "Doe", "email": "john@example.com", "password": "securePass123!"}' 
+        """
+
         user_data = api.payload
 
         # Simulate email uniqueness check (to be replaced by real validation with persistence)

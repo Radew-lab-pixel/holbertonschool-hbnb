@@ -1,6 +1,7 @@
 from app.models.base_model import BaseModel
-from flask_bcrypt import Bcrypt  # for part 3 task 1 - missing in readme.md
-from app import db, bcrypt
+# from flask_bcrypt import Bcrypt  # for part 3 task 1 - missing in readme.md
+# from app import bcrypt  removed due to issue due to circular depency
+from app.extensions import bcrypt  # removed import db for debugging
 
 class User(BaseModel):
     
