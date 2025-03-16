@@ -10,7 +10,7 @@ class Amenity(BaseModel):
     __tablename__ = 'amenities'
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     __name = Column(String[50], nullable=False)
-    places_r = relationship('Place', backref='amenities_r')
+    # places_r = relationship('Place', backref='amenities_r')  not needed as handled by backref in Place
 
     
     def __init__(self, name):

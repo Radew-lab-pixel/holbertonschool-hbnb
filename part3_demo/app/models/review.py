@@ -12,8 +12,8 @@ class Review(BaseModel):
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     __text = Column(String(128), nullable=False)
     __rating = Column(Integer, nullable=False)
-    user_r = relationship('User', backref='reviews_r')
-    place_r = relationship('Place', backref='reviews_r')
+    # user_r = relationship('User', backref='reviews_r')   # not needed as handled by backref in Place and User
+    # place_r = relationship('Place', backref='reviews_r') # not needed as handled by backref in Place
 
     def __init__(self, text, rating, place, user):
         super().__init__()

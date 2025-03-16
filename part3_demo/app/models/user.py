@@ -9,6 +9,7 @@ from sqlalchemy.orm import relationship
 bcrypt = Bcrypt()
 
 class User(BaseModel):
+    __tablename__ = 'users'
     # id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     # id inherited from BaseModel
     __first_name = Column(String(50), nullable=False)
