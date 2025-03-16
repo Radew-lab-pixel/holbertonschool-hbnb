@@ -7,8 +7,13 @@ from app.api.v1.users import api as users_nst
 from app.api.v1.places import api as places_nst
 from app.api.v1.amenities import api as amenities_nst
 from app.api.v1.reviews import review_ns
+from flask_sqlalchemy import SQLAlchemy
 
 bcrypt = Bcrypt()
+# db = SQLAlchemy() not needed as using Adrian example in /persistence/__init__.py
+
+# api = Api(version='1.0', title='HBnB API', description='HBnB Application API')  # Initialize without app
+
 
 def create_app(config_class="config.DevelopmentConfig"):
     app = Flask(__name__)

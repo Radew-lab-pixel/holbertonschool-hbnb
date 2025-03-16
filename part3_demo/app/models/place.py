@@ -17,7 +17,8 @@ class Place(BaseModel):
     __latitude = Column(Float, nullable=False)
     __longitude = Column(Float, nullable=False)
     __user_id = Column("user_id", )
-    amenities_r = relationship('Amenity', secondary=place_amenity, back_populates='places_r')
+    # example from internet ?
+    # amenities_r = relationship('Amenity', secondary=place_amenity, back_populates='places_r')
     user_r = relationship("User", backref="place_r")
     reviews_r = relationship('Review', backref='place_r')
     amenities_r = relationship('Amenity', backref='place_r')
