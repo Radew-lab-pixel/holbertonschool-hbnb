@@ -1,11 +1,17 @@
 import uuid
 from datetime import datetime
 
-class BaseModel:
+from sqlalchemy import Column, String, DateTime
+
+from app.persistence import Base
+
+class BaseModel(Base):
+    __abstract__ = True
+
     def __init__(self):
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        self.id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+        self.created_at = Column(DateTime, default=datetime.now)
+        self.updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
     def save(self):
         """Update the updated_at timestamp whenever the object is modified"""

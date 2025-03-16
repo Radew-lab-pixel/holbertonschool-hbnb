@@ -2,9 +2,16 @@ from app.models.base_model import BaseModel
 
 from flask_bcrypt import Bcrypt
 
+from sqlalchemy import Column, String, Boolean
+
 bcrypt = Bcrypt()
 
 class User(BaseModel):
+    __first_name = Column(String(50), nullable=False)
+    __last_name = Column(String(50), nullable=False)
+    __email = Column(String(120), nullable=False)
+    __password = Column(String(128), nullable=False)
+    __is_admin = Column(Boolean, nullable=False)
     
     def __init__(self, first_name, last_name, email, password=None, is_admin = False):
         super().__init__()
@@ -52,7 +59,7 @@ class User(BaseModel):
     @property
     def is_admin(self):
         return self.__is_admin
-    
+
     @is_admin.setter
     def is_admin(self, is_admin_input):
         if not isinstance(is_admin_input, bool):
@@ -60,23 +67,21 @@ class User(BaseModel):
         else:
             self.__is_admin = is_admin_input
 
-    # Added for part 3 task 1
-
     """ Added for part 3 task 1"""  
     @property
     def password(self):
         """For testing only not to be deployed"""
-        return self._password
+        return self.__password
 
     @password.setter
     def password(self, password):
         """For testing only not to be deployed"""
-        self._password = password
+        self.__password = password
 
     def hash_password(self, password):
         """Hashes the password before storing it."""
-        self._password = bcrypt.generate_password_hash(password).decode('utf-8')
+        self.__password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     def verify_password(self, password):
         """Verifies if the provided password matches the hashed password."""
-        return bcrypt.check_password_hash(self._password, password)
+        return bcrypt.check_password_hash(self.__password, password)
