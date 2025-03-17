@@ -2,13 +2,18 @@ from app.models.base_model import BaseModel
 import uuid
 from datetime import datetime
 from flask import make_response
-from sqlalchemy import Column, String, Boolean, Float, Integer
+from sqlalchemy import Column, String, Boolean, Float, Integer, DateTime
 from sqlalchemy.orm import relationship
+from datetime import datetime
+# from app.models.place import Place
 
 class Amenity(BaseModel):
     # mapping
     __tablename__ = 'amenities'
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    created_at = Column(DateTime, nullable=False, default=datetime.now())  # added by Mao 
+    updated_at = Column(DateTime, nullable=False, default=datetime.now())
+
     __name = Column(String[50], nullable=False)
     # places_r = relationship('Place', backref='amenities_r')  not needed as handled by backref in Place
 

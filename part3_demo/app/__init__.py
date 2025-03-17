@@ -10,7 +10,7 @@ from app.api.v1.reviews import review_ns
 from flask_sqlalchemy import SQLAlchemy
 
 bcrypt = Bcrypt()
-# db = SQLAlchemy() not needed as using Adrian example in /persistence/__init__.py
+db = SQLAlchemy() # not needed as using Adrian example in /persistence/__init__.py
 
 # api = Api(version='1.0', title='HBnB API', description='HBnB Application API')  # Initialize without app
 

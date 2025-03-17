@@ -1,7 +1,7 @@
 from app.models.base_model import BaseModel
 import uuid
 
-from flask_bcrypt import Bcrypt
+# from flask_bcrypt import Bcrypt
 
 from sqlalchemy import Column, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship

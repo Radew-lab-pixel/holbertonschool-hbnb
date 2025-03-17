@@ -8,10 +8,19 @@ from app.persistence import Base
 class BaseModel(Base):
     __abstract__ = True
 
+    #def __init__(self):
+    # self.id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    # self.created_at = Column(DateTime, default=datetime.now)
+    # self.updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    created_at = Column(DateTime, default=datetime.now)
+    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+
     def __init__(self):
-        self.id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-        self.created_at = Column(DateTime, default=datetime.now)
-        self.updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+        # Call parent constructor (SQLAlchemy model init)
+        super().__init__()
+
 
     def save(self):
         """Update the updated_at timestamp whenever the object is modified"""
