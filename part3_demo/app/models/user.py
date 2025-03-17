@@ -9,6 +9,7 @@ from sqlalchemy.orm import relationship
 bcrypt = Bcrypt()
 
 class User(BaseModel):
+
     __tablename__ = 'users'
     # id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     # id inherited from BaseModel
@@ -19,6 +20,7 @@ class User(BaseModel):
     __is_admin = Column(Boolean, nullable=False)
     reviews_r = relationship("Review", backref="user_r")
     places_r = relationship("Place", backref="user_r")
+    
     
     def __init__(self, first_name, last_name, email, password=None, is_admin = False):
         super().__init__()
