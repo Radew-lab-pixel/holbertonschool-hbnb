@@ -6,6 +6,7 @@ from flask_bcrypt import Bcrypt
 from sqlalchemy import Column, String, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from datetime import datetime
+from app.persistence import Base
 
 bcrypt = Bcrypt()
 
@@ -16,7 +17,7 @@ class User(BaseModel):
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     # created_at = Column(DateTime, default=datetime.now)
     # updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-    
+
     # id inherited from BaseModel
     # This creates a database column named __first_name, which is likely unintended 
     # and will cause errors if your schema expects first_name. (chatGPT)

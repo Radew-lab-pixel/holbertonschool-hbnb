@@ -13,7 +13,7 @@ Base = declarative_base()
 
 engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(USER, PWD, HOST, DB))
 
-Base.metadata.drop_all(engine)  # Delete existing tables (added by Mao)
+# Base.metadata.drop_all(engine)  # Delete existing tables (added by Mao)
 
 Base.metadata.create_all(engine)
 session_factory = sessionmaker(

@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-
 from app.persistence import db_session
 
 class Repository(ABC):

@@ -13,7 +13,7 @@ bcrypt = Bcrypt()
 # db = SQLAlchemy() not needed as using Adrian example in /persistence/__init__.py
 
 # api = Api(version='1.0', title='HBnB API', description='HBnB Application API')  # Initialize without app
-
+db = SQLAlchemy()
 
 def create_app(config_class="config.DevelopmentConfig"):
     app = Flask(__name__)
@@ -27,5 +27,6 @@ def create_app(config_class="config.DevelopmentConfig"):
     api.add_namespace(review_ns, path='/api/v1/reviews')
 
     bcrypt.init_app(app) # Part 3 task 1
+    # db.init_app(app)  # <-- Critical
 
     return app

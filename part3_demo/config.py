@@ -5,6 +5,7 @@ class Config:
     DEBUG = False
 
 class DevelopmentConfig(Config):
+    # SQLALCHEMY_DATABASE_URI = 'mysql://username:password@localhost/hbnb_evo_2_db'
     DEBUG = True
 
 config = {
