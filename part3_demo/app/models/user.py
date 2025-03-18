@@ -29,7 +29,7 @@ class User(BaseModel):
 
     __first_name = Column("first_name", String(50), nullable=False) 
     __last_name = Column("last_name", String(50), nullable=False)
-    __email = Column("email", String(50), nullable=False)
+    __email = Column("email", String(50), nullable=False, unique=True)
     __password = Column("password", String(128), nullable=False)
     __is_admin = Column("is_admin", Boolean, nullable=False)
 

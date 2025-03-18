@@ -21,6 +21,7 @@ class HBnBFacade:
         self.place_repo = SQLAlchemyRepository(Place)
         self.review_repo = SQLAlchemyRepository(Review)
         self.amenity_repo = SQLAlchemyRepository(Amenity)
+        
 
     '''Users'''
     def create_user(self, user_data) -> User:
@@ -32,10 +33,17 @@ class HBnBFacade:
     def get_user_by_id(self, _id) -> Union[User, None]:
         """Retrieve a user by their ID."""
         return self.user_repo.get(_id)
-
+    """
     def get_user_by_email(self, email) -> Union[User, None]:
-        """Retrieve a user by their email."""
+        # Retrieve a user by their email.
+        # return self.user_repo.get_by_attribute("email", email)
         return self.user_repo.get_by_attribute("email", email)
+    """    
+    def get_user_by_email(self, email):
+        """Retrieve a user by their email."""
+        # return self.user_repo.get_by_attribute("email", email)
+        # return self.user_repo.get("email", email)
+        return self.user_repo.get_user_by_email(email)
 
     def get_all_users(self) -> List[User]:
         """Retrieve all users."""
