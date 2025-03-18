@@ -3,23 +3,42 @@ import uuid
 
 from flask_bcrypt import Bcrypt
 
-from sqlalchemy import Column, String, Boolean, ForeignKey
+from sqlalchemy import Column, String, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
+from datetime import datetime
 
 bcrypt = Bcrypt()
 
 class User(BaseModel):
 
     __tablename__ = 'users'
-    # id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    # created_at = Column(DateTime, default=datetime.now)
+    # updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+    
     # id inherited from BaseModel
-    __first_name = Column(String(50), nullable=False)
-    __last_name = Column(String(50), nullable=False)
-    __email = Column(String(120), nullable=False)
-    __password = Column(String(128), nullable=False)
-    __is_admin = Column(Boolean, nullable=False)
-    reviews_r = relationship("Review", backref="user_r")
-    places_r = relationship("Place", backref="user_r")
+    # This creates a database column named __first_name, which is likely unintended 
+    # and will cause errors if your schema expects first_name. (chatGPT)
+    #__first_name = Column(String(50), nullable=False)
+    #__last_name = Column(String(50), nullable=False)
+    #__email = Column(String(120), nullable=False)
+    #__password = Column(String(128), nullable=False)
+    #__is_admin = Column(Boolean, nullable=False)
+
+    __first_name = Column("first_name", String(50), nullable=False) 
+    __last_name = Column("last_name", String(50), nullable=False)
+    __email = Column("email", String(50), nullable=False)
+    __password = Column("password", String(128), nullable=False)
+    __is_admin = Column("is_admin", Boolean, nullable=False)
+
+    # using backref resulted in qlalchemy.exc.NoForeignKeysError: Could 
+    # not determine join condition between parent/child tables 
+    # reviews_r = relationship("Review", backref="user")
+    # places_r = relationship("Place", backref="user")   # causing 
+    # reviews_r = relationship("Review", back_populates="user_r")
+    place_r = relationship("Place", back_populates="user_r")
+    reviews_r = relationship('Review', back_populates='user_r')
     
     
     def __init__(self, first_name, last_name, email, password=None, is_admin = False):

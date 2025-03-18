@@ -1,9 +1,10 @@
 from app.models.base_model import BaseModel
-from app.models.user import User
+# from app.models.user import User  # Circular import issue 
 import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, Boolean, Float, Integer
 from sqlalchemy.orm import relationship
+from sqlalchemy import ForeignKey;
 
 
 class Place(BaseModel):
@@ -16,12 +17,18 @@ class Place(BaseModel):
     __price = Column(Float, nullable=False)
     __latitude = Column(Float, nullable=False)
     __longitude = Column(Float, nullable=False)
-    __user_id = Column("user_id", )
+    # user_id = Column(String(36), ForeignKey("users.id"))
+    user_id = Column("user_id", String(36), ForeignKey('users.id'), nullable=False)
+
     # example from internet ?
     # amenities_r = relationship('Amenity', secondary=place_amenity, back_populates='places_r')
-    user_r = relationship("User", backref="place_r")
-    reviews_r = relationship('Review', backref='place_r')
-    amenities_r = relationship('Amenity', backref='place_r')
+    # user_r = relationship('User', backref="place")
+    # reviews_r = relationship('Review', backref='place')
+    # amenities_r = relationship('Amenity', backref='place')
+    user_r = relationship('User', back_populates='place_r')
+    # reviews_r = relationship('Review', back_populates='placse_r')
+    amenities_r = relationship('Amenity', back_populates='place_r')
+    reviews_r = relationship('Review', back_populates='place_r')
 
     def __init__(self, title, description, price, latitude, longitude, owner):
     # def __init__(self, title, description, price, latitude, longitude):

@@ -2,16 +2,21 @@ from app.models.base_model import BaseModel
 import uuid
 from datetime import datetime
 from flask import make_response
-from sqlalchemy import Column, String, Boolean, Float, Integer
+from sqlalchemy import Column, String, Boolean, Float, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
 class Amenity(BaseModel):
     # mapping
     __tablename__ = 'amenities'
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    __name = Column(String[50], nullable=False)
-    # places_r = relationship('Place', backref='amenities_r')  not needed as handled by backref in Place
+    _name = Column(String[50], nullable=False)
+    # place_id = Column("place_id", String(36), ForeignKey('amenities.id'), nullable=False)
+    place_id = Column("place_id", String(36), ForeignKey('places.id'), nullable=False)
 
+    # place_r = relationship('Place', backref='amenities_r') 
+    # place_r = relationship('Place', back_populates='amenities_r')  typo error 
+    # place_r = relationship('Place',back_populates='amenities_r')
+    place_r = relationship('Place', back_populates='amenities_r')
     
     def __init__(self, name):
         super().__init__()
