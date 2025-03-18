@@ -42,8 +42,8 @@ class HBnBFacade:
     def get_user_by_email(self, email):
         """Retrieve a user by their email."""
         # return self.user_repo.get_by_attribute("email", email)
-        # return self.user_repo.get("email", email)
-        return self.user_repo.get_user_by_email(email)
+        return self.user_repo.get_by_attribute("email", email)
+        # return self.user_repo.get_user_by_email(email)
 
     def get_all_users(self) -> List[User]:
         """Retrieve all users."""
