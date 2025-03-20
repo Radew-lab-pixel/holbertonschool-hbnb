@@ -4,6 +4,7 @@ from app.models.user import User
 from app.models.place import Place
 from app.models.review import Review
 from app.models.amenity import Amenity
+from app.persistence.repository import UserRepository
 
 class HBnBFacade:
     """Facade class to manage interactions between business logic entities and repositories.
@@ -17,10 +18,11 @@ class HBnBFacade:
 
     def __init__(self):
         """Initialize the Facade with in-memory repositories for each entity."""
-        self.user_repo = SQLAlchemyRepository(User)
+        # self.user_repo = SQLAlchemyRepository(User)
         self.place_repo = SQLAlchemyRepository(Place)
         self.review_repo = SQLAlchemyRepository(Review)
         self.amenity_repo = SQLAlchemyRepository(Amenity)
+        self.user_repo = UserRepository()
         
 
     '''Users'''
@@ -42,7 +44,8 @@ class HBnBFacade:
     def get_user_by_email(self, email):
         """Retrieve a user by their email."""
         # return self.user_repo.get_by_attribute("email", email)
-        return self.user_repo.get_by_attribute("email", email)
+        # return self.user_repo.get_by_attribute("email", email)
+        return self.user_repo.get_by_email(email)
         # return self.user_repo.get_user_by_email(email)
 
     def get_all_users(self) -> List[User]:

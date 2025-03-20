@@ -76,9 +76,21 @@ class SQLAlchemyRepository(Repository):
         return query.first()
     """
 
+"""
 class UserRepository(SQLAlchemyRepository):
     def __init__(self):
         super().__init__(User)
 
-    def get_user_by_email(self, email):
-        return super().get_by_attribute("_email", email)
+    def get_by_email(self, email):
+        # return super().get_by_attribute("email", email)
+        
+        return self.model.query.filter_by(email=email).first()
+"""
+
+class UserRepository(SQLAlchemyRepository):
+    def __init__(self):
+        super().__init__(User)
+    
+    def get_by_email(self, email):
+        # return self.model.query.filter_by(__email=email).first()  # never use due to db_session.query(self.model)
+        return super().get_by_attribute("email", email)
