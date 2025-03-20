@@ -14,9 +14,9 @@ class User(BaseModel):
 
     __tablename__ = 'users'
     
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    # created_at = Column(DateTime, default=datetime.now)
-    # updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+    id = Column("id", String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    created_at = Column("created_at", DateTime, default=datetime.now)
+    updated_at = Column("updated_at", DateTime, default=datetime.now, onupdate=datetime.now)
 
     # id inherited from BaseModel
     # This creates a database column named __first_name, which is likely unintended 
