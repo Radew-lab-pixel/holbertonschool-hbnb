@@ -14,21 +14,12 @@ class User(BaseModel):
 
     __tablename__ = 'users'
     
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    created_at = Column(DateTime, default=datetime.now)
-    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-
     __first_name = Column("first_name", String(50), nullable=False) 
     __last_name = Column("last_name", String(50), nullable=False)
     __email = Column("email", String(50), nullable=False, unique=True)
     __password = Column("password", String(128), nullable=False)
     __is_admin = Column("is_admin", Boolean, default=False)
-
-    # using backref resulted in qlalchemy.exc.NoForeignKeysError: Could 
-    # not determine join condition between parent/child tables 
-    # reviews_r = relationship("Review", backref="user")
-    # places_r = relationship("Place", backref="user")   # causing 
-    # reviews_r = relationship("Review", back_populates="user_r")
+    
     place_r = relationship("Place", back_populates="user_r")
     reviews_r = relationship('Review', back_populates='user_r')
     
