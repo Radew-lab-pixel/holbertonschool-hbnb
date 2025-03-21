@@ -14,24 +14,15 @@ class User(BaseModel):
 
     __tablename__ = 'users'
     
-    id = Column("id", String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    created_at = Column("created_at", DateTime, default=datetime.now)
-    updated_at = Column("updated_at", DateTime, default=datetime.now, onupdate=datetime.now)
-
-    # id inherited from BaseModel
-    # This creates a database column named __first_name, which is likely unintended 
-    # and will cause errors if your schema expects first_name. (chatGPT)
-    #__first_name = Column(String(50), nullable=False)
-    #__last_name = Column(String(50), nullable=False)
-    #__email = Column(String(120), nullable=False)
-    #__password = Column(String(128), nullable=False)
-    #__is_admin = Column(Boolean, nullable=False)
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    created_at = Column(DateTime, default=datetime.now)
+    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
     __first_name = Column("first_name", String(50), nullable=False) 
     __last_name = Column("last_name", String(50), nullable=False)
     __email = Column("email", String(50), nullable=False, unique=True)
     __password = Column("password", String(128), nullable=False)
-    __is_admin = Column("is_admin", Boolean, nullable=False)
+    __is_admin = Column("is_admin", Boolean, default=False)
 
     # using backref resulted in qlalchemy.exc.NoForeignKeysError: Could 
     # not determine join condition between parent/child tables 

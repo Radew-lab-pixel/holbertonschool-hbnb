@@ -1,5 +1,7 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
+# import jsonify
+from flask import jsonify
 
 
 api = Namespace('users', description='User operations')
@@ -36,6 +38,8 @@ class UserList(Resource):
         existing_user = facade.get_user_by_email(user_data['email'])
         if existing_user:
             return {'error': 'Email already registered'}, 400
+
+        print(jsonify(user_data))
 
         new_user = facade.create_user(user_data)
         new_user.hash_password(user_data['password'])
