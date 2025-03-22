@@ -32,9 +32,10 @@ class HBnBFacade:
         self.user_repo.add(user)
         return user
     
-    def get_user_by_id(self, _id) -> Union[User, None]:
+    def get_user_by_id(self, id) -> Union[User, None]:
         """Retrieve a user by their ID."""
-        return self.user_repo.get(_id)
+        # return self.user_repo.get(id)
+        return self.user_repo.get_by_id(id)
     """
     def get_user_by_email(self, email) -> Union[User, None]:
         # Retrieve a user by their email.
@@ -60,6 +61,9 @@ class HBnBFacade:
                 raise ValueError('Email must be unique')
         self.user_repo.update(_id, data)
         return self.get_user_by_id(_id)
+    
+    def get_user(self, user_id):
+        return self.user_repo.get(user_id)
     
     '''Places'''
     def create_place(self, place_data) -> Place:

@@ -11,14 +11,14 @@ class Place(BaseModel):
     # Mapping Added for part 3 task 7
     __tablename__ = "places"
     # id , created_at , updated_at inherited from BaseModel
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    __title = Column(String[50], nullable=False)
-    __description = Column(String[128], nullable=False)
-    __price = Column(Float, nullable=False)
-    __latitude = Column(Float, nullable=False)
-    __longitude = Column(Float, nullable=False)
+    # id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    __title = Column("title", String[50], nullable=False)
+    __description = Column("description", String[128], nullable=False)
+    __price = Column("price", Float, nullable=False)
+    __latitude = Column("latitude", Float, nullable=False)
+    __longitude = Column("longitude", Float, nullable=False)
     # user_id = Column(String(36), ForeignKey("users.id"))
-    user_id = Column("user_id", String(36), ForeignKey('users.id'), nullable=False)
+    __owner_id = Column("owner_id", String(36), ForeignKey('users.id'), nullable=False)
 
     # example from internet ?
     # amenities_r = relationship('Amenity', secondary=place_amenity, back_populates='places_r')
@@ -29,29 +29,18 @@ class Place(BaseModel):
     # reviews_r = relationship('Review', back_populates='placse_r')
     amenities_r = relationship('Amenity', back_populates='place_r')
     reviews_r = relationship('Review', back_populates='place_r')
+    
 
-    def __init__(self, title, description, price, latitude, longitude, owner):
+    def __init__(self, title, description, price, latitude, longitude, owner_id):
     # def __init__(self, title, description, price, latitude, longitude):
         super().__init__()
         
-        # self.id = str(uuid.uuid4())
-       
-        """ Added due to 
-        """
-        # File "/home/oem/holbertonschool-hbnb/part2/app/persistence/repository.py", line 34, in add
-        # self._storage[obj.id] = obj
-        #           ^^^^^^^^^^^^^
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
-
-
         self.title = title
         self.description = description
         self.price = price
         self.latitude = latitude
         self.longitude = longitude
-        self.owner = owner   # has to be owner object 
+        self.owner_id = owner_id   # has to be owner object 
         self.reviews = []  # List to store related reviews
         self.amenities = []  # List to store related amenities
 
@@ -106,11 +95,12 @@ class Place(BaseModel):
     
     """owner"""
     @property
-    def owner(self):
-        return self.__owner
+    def owner_id(self):
+        return self.__owner_id
     
-    def owner(self, owner_input):
-        self.__owner = owner_input
+    @owner_id.setter
+    def owner_id(self, owner_input):
+        self.__owner_id = owner_input
 
     def add_review(self, review):
         """Add a review to the place."""

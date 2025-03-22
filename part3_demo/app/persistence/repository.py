@@ -94,3 +94,6 @@ class UserRepository(SQLAlchemyRepository):
     def get_by_email(self, email):
         # return self.model.query.filter_by(__email=email).first()  # never use due to db_session.query(self.model)
         return super().get_by_attribute("email", email)
+    
+    def get_by_id(self, id):
+        return super().get_by_attribute("id", id)

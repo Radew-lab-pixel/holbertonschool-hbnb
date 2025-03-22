@@ -37,6 +37,7 @@ class UserList(Resource):
         # Simulate email uniqueness check (to be replaced by real validation with persistence)
         existing_user = facade.get_user_by_email(user_data['email'])
         if existing_user:
+            print("Email been registered")
             return {'error': 'Email already registered'}, 400
 
         print(jsonify(user_data))
@@ -71,12 +72,16 @@ class UserResource(Resource):  # this is special as instead of def , class is us
     @api.response(404, 'User not found')
     def get(self, user_id):
         """Get user details by ID"""
+        # user = facade.get_user_by_id(user_id)
         user = facade.get_user_by_id(user_id)
+        # user = facade.get_user(user_id) format from chatGPT
 
         if not user:
             return {'error': 'User not found'}, 404
 
         return {'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'email': user.email}, 200
+
+
 
 
     @api.response(200, 'User successfully updated')
