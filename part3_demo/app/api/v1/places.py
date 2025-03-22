@@ -61,7 +61,8 @@ class PlaceList(Resource):
                     'price': place_data['price'],
                     'latitude': place_data['latitude'],
                     'longitude': place_data['longitude'],
-                    'owner_id': existing_user}  # owner is User class object
+                    'owner_id': place_data['owner_id']}
+                    # 'owner_id': str(existing_user)}  # owner is User class object
         # place_created = facade.create_place(place_data)  # call create_place method in fascade module
         place_created = facade.create_place(new_dict)  # place_created is place object
         # return{"message" : "New place registered"}, 201  # has to be {} for return in flask
