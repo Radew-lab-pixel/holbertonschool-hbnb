@@ -1,6 +1,6 @@
 from app.models.base_model import BaseModel
-# from app.models.place import Place
-# from app.models.user import User
+from app.models.place import Place
+from app.models.user import User
 from sqlalchemy import Column, String, Boolean, Float, Integer
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey
@@ -11,15 +11,15 @@ class Review(BaseModel):
     # mapping
     __tablename__ = 'reviews'
         
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    # id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     # __text = Column(String(128), nullable=False)
     # __rating = Column(Integer, nullable=False)
 
-    text = Column(String(128), nullable=False)
-    rating = Column(Integer, nullable=False)
+    __text = Column(String(128), nullable=False)
+    __rating = Column(Integer, nullable=False)
     # place_id = Column(String(36), ForeignKey('place_id')) i an idiot
-    place_id = Column(String(36), ForeignKey('places.id'))
-    user_id = Column(String(36), ForeignKey('users.id'))
+    __place_id = Column(String(36), ForeignKey('places.id'))
+    __user_id = Column(String(36), ForeignKey('users.id'))
     # place_id = Column(String(36), ForeignKey('places.id'))
     # user_id = Column(String(36), ForeignKey('users.id'))
     

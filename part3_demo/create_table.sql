@@ -73,3 +73,15 @@ CREATE TABLE `places` (
   `owner_id` varchar(60) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `reviews`;
+CREATE TABLE `reviews` (
+  `id` varchar(60) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `text` text NOT NULL,
+  `rating` integer NOT NULL,
+  `place_id` varchar(60) NOT NULL,
+  `user_id` varchar(60) NOT NULL,
+  PRIMARY KEY (`id`)
+   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

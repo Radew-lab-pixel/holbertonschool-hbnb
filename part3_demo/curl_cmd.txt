@@ -20,6 +20,8 @@ curl -X POST http://localhost:5000/api/v1/users \
         -H "Content-Type: application/json" \
         -d '{"first_name": "John", "last_name": "Doe", "email": "john@example.com", "password": "securePass123!"}' 
 
+
+--- part 3
 curl -X POST http://localhost:5000/api/v1/users/ -H "Content-Type: application/json" -d '{"first_name": "John", "last_name": "Doe", "email": "john.doe@example.com", "password": "securePass123!"}'
 
 curl -X POST http://localhost:5000/api/v1/users/ -H "Content-Type: application/json" -d '{"first_name": "kie", "last_name": "Doe", "email": "john.doe@example.com", "password":"password"}'
@@ -27,3 +29,7 @@ curl -X POST http://localhost:5000/api/v1/users/ -H "Content-Type: application/j
 curl -X POST http://localhost:5000/api/v1/users/ -H "Content-Type: application/json" -d '{"first_name": "Darain", "last_name": "Does", "email": "do.does@example.com", "password": "password1"}'
 
 curl -X GET http://127.0.0.1:5000/api/v1/users/
+
+curl -X POST http://127.0.0.1:5000/api/v1/places/ -H "Content-Type: application/json" -d '{ "title": "Cozy Apartment","description": "A nice place to stay", "price": 100.0,"latitude": 37.7749,"longitude": -122.4194, "owner_id": "ed5b2598-b9eb-4513-94b5-d6792b41b087"}'
+
+ curl -X GET http://127.0.0.1:5000/api/v1/places/
