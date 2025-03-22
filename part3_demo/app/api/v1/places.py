@@ -117,10 +117,12 @@ class PlaceResource(Resource):
         # Placeholder for the logic to retrieve a place by ID, including associated owner and amenities
         place = facade.get_place(place_id)  # place_list is  place object
 
-        owner = place.owner
+        # owner = place.owner
+        owner = place.owner_id
         
         amenities_list = []
-        for amenity in place.amenities:
+        # for amenity in place.amenities:
+        for amenity in place.amenities_r:
             amenities_list.append({
                 'amenity_id': str(amenity.id),
                 'name': amenity.name

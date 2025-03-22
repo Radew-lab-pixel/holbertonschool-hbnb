@@ -9,18 +9,19 @@ class Amenity(BaseModel):
     # mapping
     __tablename__ = 'amenities'
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    _name = Column(String[50], nullable=False)
+    __name = Column("name", String[50], nullable=False)
     # place_id = Column("place_id", String(36), ForeignKey('amenities.id'), nullable=False)
-    place_id = Column("place_id", String(36), ForeignKey('places.id'), nullable=False)
+    __place_id = Column("place_id", String(36), ForeignKey('places.id'), nullable=False)
 
     # place_r = relationship('Place', backref='amenities_r') 
     # place_r = relationship('Place', back_populates='amenities_r')  typo error 
     # place_r = relationship('Place',back_populates='amenities_r')
     place_r = relationship('Place', back_populates='amenities_r')
     
-    def __init__(self, name):
+    def __init__(self, name, place_id):
         super().__init__()
-        self.name = name
+        self.__name = name
+        self.__place_id = place_id
 
         """include due to self._storage[obj.id] = obj error"""
         self.id = str(uuid.uuid4())
@@ -47,4 +48,12 @@ class Amenity(BaseModel):
     def name(self, name_input):
         # self.__name = name_input
         self.__name = name_input.strip()  # remove leading and trailing space
+
+    @property
+    def place_id(self):
+        return self.__place_id
+    
+    @place_id.setter
+    def place_id(self, place_id):
+        self.__place_id = place_id.strip()
     
