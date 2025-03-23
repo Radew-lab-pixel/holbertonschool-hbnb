@@ -125,12 +125,14 @@ class PlaceResource(Resource):
         # for amenity in place.amenities:
          
 
-
+        """ Disabled as amenity reference not working 
         for amenity in place.amenities_r:
             amenities_list.append({
                 'amenity_id': str(amenity.id),
                 'name': amenity.name
             })
+        """
+
 
         output_dict = {
                         'place_id': str(place.id),

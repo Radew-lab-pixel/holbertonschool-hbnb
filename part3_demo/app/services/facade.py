@@ -5,6 +5,7 @@ from app.models.place import Place
 from app.models.review import Review
 from app.models.amenity import Amenity
 from app.persistence.repository import UserRepository
+from app.persistence.repository import AmenityRepository
 
 class HBnBFacade:
     """Facade class to manage interactions between business logic entities and repositories.

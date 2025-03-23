@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from app.persistence import db_session
 import logging
 from app.models.user import User
+from app.models.amenity import Amenity
 
 
 class Repository(ABC):
@@ -97,3 +98,10 @@ class UserRepository(SQLAlchemyRepository):
     
     def get_by_id(self, id):
         return super().get_by_attribute("id", id)
+    
+class AmenityRepository(SQLAlchemyRepository):
+    def __init__(self):
+        super().__init__(Amenity)
+
+    def get_by_place_id(self, place_id):
+        return super().get_by_attribute("place_id", place_id)
