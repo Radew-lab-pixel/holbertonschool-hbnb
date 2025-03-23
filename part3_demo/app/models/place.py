@@ -20,6 +20,8 @@ class Place(BaseModel):
     # user_id = Column(String(36), ForeignKey("users.id"))
     __owner_id = Column("owner_id", String(36), ForeignKey('users.id'), nullable=False)
 
+    reviews=[]
+    amenities=[]
     # example from internet ?
     # amenities_r = relationship('Amenity', secondary=place_amenity, back_populates='places_r')
     # user_r = relationship('User', backref="place")
@@ -109,4 +111,5 @@ class Place(BaseModel):
     def add_amenity(self, amenity):
         """Add an amenity to the place."""
         self.amenities.append(amenity)
-        
+
+            

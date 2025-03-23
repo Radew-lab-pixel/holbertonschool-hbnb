@@ -115,9 +115,9 @@ class HBnBFacade:
         review = Review(text, rating, place, user)
         self.review_repo.add(review)
         place.add_review(review)
-        user.reviews.append(review)
+        # user.reviews.append(review)  removed user.reviews for debugging 
         self.place_repo.update(place_id, {"reviews": place.reviews})
-        self.user_repo.update(user_id, {"reviews": user.reviews})
+        # self.user_repo.update(user_id, {"reviews": user.reviews}) removed user_repo.update for debugging 
         return review
 
     def get_review(self, review_id: str) -> Union[Review, None]:
