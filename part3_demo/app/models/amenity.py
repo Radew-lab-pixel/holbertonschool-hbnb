@@ -14,7 +14,7 @@ class Amenity(BaseModel):
     __place_id = Column("place_id", String(36), ForeignKey('places.id'), nullable=False)
 
     # place_r = relationship('Place', backref='amenities_r') 
-    # place_r = relationship('Place', back_populates='amenities_r')  typo error 
+    # place_r = relationship('Place', back_populates='amenites_r')  typo error 
     # place_r = relationship('Place',back_populates='amenities_r')
     place_r = relationship('Place', back_populates='amenities_r')
     
