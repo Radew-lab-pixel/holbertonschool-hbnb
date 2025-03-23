@@ -4,7 +4,7 @@ VALUES (
     'Admin',
     'HBnB',
     'admin@hbnb.io',
-    '$2b$12$yourhashedpasswordhere',
+    '$2b$12$HM9IW1BzF6TQGmDYKhoT3uim.4wBUlqDD0RY3gt4qGnCnB98w0zlC',
     TRUE
 );
 
