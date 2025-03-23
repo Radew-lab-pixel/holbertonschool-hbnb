@@ -5,7 +5,8 @@ api = Namespace('amenities', description='Amenity operations')
 
 # Define the amenity model for input validation and documentation
 amenity_model = api.model('Amenity', {
-    'name': fields.String(required=True, description='Name of the amenity')
+    'name': fields.String(required=True, description='Name of the amenity'),
+    'place_id': fields.String(required=True, description='Id of place')
 })
 
 @api.route('/')
@@ -21,15 +22,18 @@ class AmenityList(Resource):
         # curl -X POST http://localhost:5000/api/v1/amenities/ -H "Content-Type: application/json" -d '{"name": "Wi-Fi"}'
         
         amenity_data = api.payload
+        place_id = amenity_data.get('place_id')
+        print (str(place_id))
 
         try:
             new_amenity = facade.create_amenity(amenity_data)
             
-            print("id", new_amenity.id)
-
+            # print("id", new_amenity.id)
+            print ("testing")
             return {
                 "id": str(new_amenity.id),
-                "name": new_amenity.name
+                "name": new_amenity.name,
+                "place_id": str(place_id)
             }, 201
 
         except ValueError:

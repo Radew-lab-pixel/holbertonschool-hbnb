@@ -48,4 +48,4 @@ curl -X GET http://127.0.0.1:5000/api/v1/reviews/2b99af7c-cd58-4a39-bd7d-f116b18
 
 curl -X PUT http://127.0.0.1:5000/api/v1/reviews/2b99af7c-cd58-4a39-bd7d-f116b180ee01 -H "Content-Type: application/json" -d '{ "text": "Bad place to stay!", "rating": 1}'
 
-curl -X POST http://127.0.0.1:5000/api/v1/amenities/ -d '{ "name": "spa", "place_id": "50625edf-dded-4854-8477-e89520c0b21f"}'
+curl -X POST http://127.0.0.1:5000/api/v1/amenities/ -H "Content-Type: application/json" -d '{ "name": "spa", "place_id": "50625edf-dded-4854-8477-e89520c0b21f"}'

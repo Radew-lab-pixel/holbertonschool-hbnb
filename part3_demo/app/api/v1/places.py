@@ -123,6 +123,9 @@ class PlaceResource(Resource):
 
         amenities_list = []
         # for amenity in place.amenities:
+         
+
+
         for amenity in place.amenities_r:
             amenities_list.append({
                 'amenity_id': str(amenity.id),
@@ -141,7 +144,7 @@ class PlaceResource(Resource):
                         'last_name': owner.last_name,
                         'email': owner.email
             },
-            'amenities': amenities_list
+            'amenities': amenities_list 
            
         }
         
