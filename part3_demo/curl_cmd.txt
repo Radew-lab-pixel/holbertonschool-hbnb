@@ -41,3 +41,10 @@ curl -X PUT http://127.0.0.1:5000/api/v1/places/50625edf-dded-4854-8477-e89520c0
 curl -X GET http://127.0.0.1:5000/api/v1/places/50625edf-dded-4854-8477-e89520c0b21f
 
 curl -X POST http://127.0.0.1:5000/api/v1/reviews/ -H "Content-Type: application/json" -d '{ "text": "Great place to stay!", "rating": 5, "user_id": "84eac8c4-2d4a-4ee0-a457-9af478be662c", "place_id": "50625edf-dded-4854-8477-e89520c0b21f"}'
+
+curl -X GET http://127.0.0.1:5000/api/v1/reviews/
+
+curl -X GET http://127.0.0.1:5000/api/v1/reviews/2b99af7c-cd58-4a39-bd7d-f116b180ee01
+
+curl -X PUT http://127.0.0.1:5000/api/v1/reviews/2b99af7c-cd58-4a39-bd7d-f116b180ee01 -H "Content-Type: application/json" -d '{ "text": "Bad place to stay!", "rating": 1}'
+
