@@ -118,8 +118,9 @@ class PlaceResource(Resource):
         place = facade.get_place(place_id)  # place_list is  place object
 
         # owner = place.owner
-        owner = place.owner_id
-        
+        user = place.owner_id
+        owner = facade.get_user_by_id(user)  
+
         amenities_list = []
         # for amenity in place.amenities:
         for amenity in place.amenities_r:

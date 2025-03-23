@@ -15,11 +15,11 @@ class Review(BaseModel):
     # __text = Column(String(128), nullable=False)
     # __rating = Column(Integer, nullable=False)
 
-    __text = Column(String(128), nullable=False)
-    __rating = Column(Integer, nullable=False)
+    text = Column("text", String(128), nullable=False)
+    rating = Column("rating", Integer, nullable=False)
     # place_id = Column(String(36), ForeignKey('place_id')) i an idiot
-    __place_id = Column(String(36), ForeignKey('places.id'))
-    __user_id = Column(String(36), ForeignKey('users.id'))
+    place_id = Column("place_id", String(36), ForeignKey('places.id'))
+    user_id = Column("user_id", String(36), ForeignKey('users.id'))
     # place_id = Column(String(36), ForeignKey('places.id'))
     # user_id = Column(String(36), ForeignKey('users.id'))
     
@@ -42,8 +42,8 @@ class Review(BaseModel):
         
         self.text = text
         self.rating = rating
-        self.place = place
-        self.user = user
+        self.place_id = place.id
+        self.user_id = user.id
 
     def to_dict(self):
         """Convert the Review instance to a dictionary for JSON serialization."""
@@ -51,8 +51,10 @@ class Review(BaseModel):
             "id": self.id,
             "text": self.text,
             "rating": self.rating,
-            "place_id": self.place.id,
-            "user_id": self.user.id,
+            # "place_id": self.place.id,
+            # "user_id": self.user.id,
+            "place_id": self.place_id,
+            "user_id": self.user_id,
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat()
         }

@@ -8,7 +8,7 @@ from sqlalchemy.orm import relationship
 class Amenity(BaseModel):
     # mapping
     __tablename__ = 'amenities'
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    # id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4())) not need as in Base_Model
     __name = Column("name", String[50], nullable=False)
     # place_id = Column("place_id", String(36), ForeignKey('amenities.id'), nullable=False)
     __place_id = Column("place_id", String(36), ForeignKey('places.id'), nullable=False)
