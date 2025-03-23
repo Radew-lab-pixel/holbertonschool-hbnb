@@ -1,17 +1,26 @@
 from app.models.base_model import BaseModel
+import uuid
 
 from flask_bcrypt import Bcrypt
 
-from sqlalchemy import Column, String, Boolean
+from sqlalchemy import Column, String, Boolean, ForeignKey
+from sqlalchemy.orm import relationship
 
 bcrypt = Bcrypt()
 
 class User(BaseModel):
+
+    __tablename__ = 'users'
+    # id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    # id inherited from BaseModel
     __first_name = Column(String(50), nullable=False)
     __last_name = Column(String(50), nullable=False)
     __email = Column(String(120), nullable=False)
     __password = Column(String(128), nullable=False)
     __is_admin = Column(Boolean, nullable=False)
+    reviews_r = relationship("Review", backref="user_r")
+    places_r = relationship("Place", backref="user_r")
+    
     
     def __init__(self, first_name, last_name, email, password=None, is_admin = False):
         super().__init__()

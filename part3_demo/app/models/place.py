@@ -2,9 +2,27 @@ from app.models.base_model import BaseModel
 from app.models.user import User
 import uuid
 from datetime import datetime
+from sqlalchemy import Column, String, Boolean, Float, Integer
+from sqlalchemy.orm import relationship
 
 
 class Place(BaseModel):
+    # Mapping Added for part 3 task 7
+    __tablename__ = "places"
+    # id , created_at , updated_at inherited from BaseModel
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    __title = Column(String[50], nullable=False)
+    __description = Column(String[128], nullable=False)
+    __price = Column(Float, nullable=False)
+    __latitude = Column(Float, nullable=False)
+    __longitude = Column(Float, nullable=False)
+    __user_id = Column("user_id", )
+    # example from internet ?
+    # amenities_r = relationship('Amenity', secondary=place_amenity, back_populates='places_r')
+    user_r = relationship("User", backref="place_r")
+    reviews_r = relationship('Review', backref='place_r')
+    amenities_r = relationship('Amenity', backref='place_r')
+
     def __init__(self, title, description, price, latitude, longitude, owner):
     # def __init__(self, title, description, price, latitude, longitude):
         super().__init__()
