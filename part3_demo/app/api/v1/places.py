@@ -125,7 +125,7 @@ class PlaceResource(Resource):
         # for amenity in place.amenities:
          
 
-        """ Disabled as amenity reference not working 
+        """ Disabled as amenity reference not working ( error JSON format issue , need many to many relationship)
         for amenity in place.amenities_r:
             amenities_list.append({
                 'amenity_id': str(amenity.id),
