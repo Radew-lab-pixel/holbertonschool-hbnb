@@ -19,6 +19,8 @@ app = Flask(__name__)
 def index():
     """ Landing page for the site """
     # you MUST have the 'templates' and 'static' folders
+    # templates for html files
+    # static for js and css files and images folder    
 
     return render_template('index.html')
 
@@ -41,3 +43,4 @@ jwt = JWTManager(app)
 if __name__ == '__main__':
     # app.run(debug=True)
     app.run(host='localhost', port=5000, debug=True)
+    # app.run(host='localhost', port=5500, debug=True)
