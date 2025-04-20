@@ -6,6 +6,7 @@ from app.services import facade
 review_ns = Namespace("reviews", description="Operations related to reviews")
 
 review_model = review_ns.model("Review", {
+    "id": fields.String(required=False, description="Review content"),
     "text": fields.String(required=True, description="Review content"),
     "rating": fields.Integer(required=True, min=1, max=5, description="Rating (1-5)"),
     "place_id": fields.String(required=True, description="ID of the place"),
@@ -23,9 +24,23 @@ class ReviewList(Resource):
         # Test this endpoint
         # Add user
         # curl -X GET http://localhost:5000/api/v1/reviews/ -H "Content-Type: application/json"
+        output_dict = []
 
         reviews = facade.get_all_reviews()
-        return [r.to_dict() for r in reviews], 200
+        # return [r.to_dict() for r in reviews], 200
+        for review in reviews:
+            output_dict.append({
+            'id': str(review.id),
+            'text':review.text,
+            'rating': review.rating,
+            'place_id': str(review.place_id),
+            'user_id': str(review.user_id)
+            })
+        # print ("Successfully") for debugging
+        # print(output_dict) for debugging
+        return output_dict, 200
+
+        
 
     @review_ns.doc("create_review")
     @review_ns.expect(review_model)

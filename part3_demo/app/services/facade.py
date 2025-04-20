@@ -4,6 +4,8 @@ from app.models.user import User
 from app.models.place import Place
 from app.models.review import Review
 from app.models.amenity import Amenity
+from app.persistence.repository import UserRepository
+from app.persistence.repository import AmenityRepository
 
 class HBnBFacade:
     """Facade class to manage interactions between business logic entities and repositories.
@@ -17,10 +19,12 @@ class HBnBFacade:
 
     def __init__(self):
         """Initialize the Facade with in-memory repositories for each entity."""
-        self.user_repo = SQLAlchemyRepository(User)
+        # self.user_repo = SQLAlchemyRepository(User)
         self.place_repo = SQLAlchemyRepository(Place)
         self.review_repo = SQLAlchemyRepository(Review)
         self.amenity_repo = SQLAlchemyRepository(Amenity)
+        self.user_repo = UserRepository()
+        
 
     '''Users'''
     def create_user(self, user_data) -> User:
@@ -29,13 +33,22 @@ class HBnBFacade:
         self.user_repo.add(user)
         return user
     
-    def get_user_by_id(self, _id) -> Union[User, None]:
+    def get_user_by_id(self, id) -> Union[User, None]:
         """Retrieve a user by their ID."""
-        return self.user_repo.get(_id)
-
+        # return self.user_repo.get(id)
+        return self.user_repo.get_by_id(id)
+    """
     def get_user_by_email(self, email) -> Union[User, None]:
-        """Retrieve a user by their email."""
+        # Retrieve a user by their email.
+        # return self.user_repo.get_by_attribute("email", email)
         return self.user_repo.get_by_attribute("email", email)
+    """    
+    def get_user_by_email(self, email):
+        """Retrieve a user by their email."""
+        # return self.user_repo.get_by_attribute("email", email)
+        # return self.user_repo.get_by_attribute("email", email)
+        return self.user_repo.get_by_email(email)
+        # return self.user_repo.get_user_by_email(email)
 
     def get_all_users(self) -> List[User]:
         """Retrieve all users."""
@@ -49,6 +62,9 @@ class HBnBFacade:
                 raise ValueError('Email must be unique')
         self.user_repo.update(_id, data)
         return self.get_user_by_id(_id)
+    
+    def get_user(self, user_id):
+        return self.user_repo.get(user_id)
     
     '''Places'''
     def create_place(self, place_data) -> Place:
@@ -100,9 +116,9 @@ class HBnBFacade:
         review = Review(text, rating, place, user)
         self.review_repo.add(review)
         place.add_review(review)
-        user.reviews.append(review)
+        # user.reviews.append(review)  removed user.reviews for debugging 
         self.place_repo.update(place_id, {"reviews": place.reviews})
-        self.user_repo.update(user_id, {"reviews": user.reviews})
+        # self.user_repo.update(user_id, {"reviews": user.reviews}) removed user_repo.update for debugging 
         return review
 
     def get_review(self, review_id: str) -> Union[Review, None]:

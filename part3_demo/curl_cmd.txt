@@ -20,4 +20,34 @@ curl -X POST http://localhost:5000/api/v1/users \
         -H "Content-Type: application/json" \
         -d '{"first_name": "John", "last_name": "Doe", "email": "john@example.com", "password": "securePass123!"}' 
 
+
+--- part 3
 curl -X POST http://localhost:5000/api/v1/users/ -H "Content-Type: application/json" -d '{"first_name": "John", "last_name": "Doe", "email": "john.doe@example.com", "password": "securePass123!"}'
+
+curl -X POST http://localhost:5000/api/v1/users/ -H "Content-Type: application/json" -d '{"first_name": "kie", "last_name": "Doe", "email": "kie.doe@example.com", "password":"password"}'
+
+curl -X POST http://localhost:5000/api/v1/users/ -H "Content-Type: application/json" -d '{"first_name": "Darain", "last_name": "Does", "email": "do.does@example.com", "password": "password1"}'
+
+curl -X GET http://127.0.0.1:5000/api/v1/users/
+
+curl -X GET http://127.0.0.1:5000/api/v1/users/84eac8c4-2d4a-4ee0-a457-9af478be662c
+
+curl -X POST http://127.0.0.1:5000/api/v1/places/ -H "Content-Type: application/json" -d '{ "title": "Cozy Apartment","description": "A nice place to stay", "price": 100.0,"latitude": 37.7749,"longitude": -122.4194, "owner_id": "ed5b2598-b9eb-4513-94b5-d6792b41b087"}'
+
+curl -X GET http://127.0.0.1:5000/api/v1/places/
+
+curl -X PUT http://127.0.0.1:5000/api/v1/places/50625edf-dded-4854-8477-e89520c0b21f -H "Content-Type: application/json" -d '{"title": "Luxury Condo", "description": "An upscale place to stay","price": 200.0}'
+
+curl -X GET http://127.0.0.1:5000/api/v1/places/50625edf-dded-4854-8477-e89520c0b21f
+
+curl -X POST http://127.0.0.1:5000/api/v1/places/ -H "Content-Type: application/json" -d '{ "title": "Tiny little tent","description": "only if you desperate", "price": 1.00,"latitude": 37.7749,"longitude": -122.4194, "owner_id": "ef6153bc-c000-4053-94ec-24b7916a887e"}'
+
+curl -X POST http://127.0.0.1:5000/api/v1/reviews/ -H "Content-Type: application/json" -d '{ "text": "Great place to stay!", "rating": 5, "user_id": "84eac8c4-2d4a-4ee0-a457-9af478be662c", "place_id": "50625edf-dded-4854-8477-e89520c0b21f"}'
+
+curl -X GET http://127.0.0.1:5000/api/v1/reviews/
+
+curl -X GET http://127.0.0.1:5000/api/v1/reviews/2b99af7c-cd58-4a39-bd7d-f116b180ee01
+
+curl -X PUT http://127.0.0.1:5000/api/v1/reviews/2b99af7c-cd58-4a39-bd7d-f116b180ee01 -H "Content-Type: application/json" -d '{ "text": "Bad place to stay!", "rating": 1}'
+
+curl -X POST http://127.0.0.1:5000/api/v1/amenities/ -H "Content-Type: application/json" -d '{ "name": "spa", "place_id": "50625edf-dded-4854-8477-e89520c0b21f"}'

@@ -61,10 +61,10 @@ class PlaceList(Resource):
                     'price': place_data['price'],
                     'latitude': place_data['latitude'],
                     'longitude': place_data['longitude'],
-                    'owner': existing_user}  # owner is User class object
+                    'owner_id': place_data['owner_id']}
+                    # 'owner_id': str(existing_user)}  # owner is User class object
         # place_created = facade.create_place(place_data)  # call create_place method in fascade module
         place_created = facade.create_place(new_dict)  # place_created is place object
-       
         # return{"message" : "New place registered"}, 201  # has to be {} for return in flask
         # if place_created:
         # return place_created, 201   # for debugging
@@ -78,7 +78,7 @@ class PlaceList(Resource):
                                 'latitude': place_created.latitude,
                                 'longitude': place_created.longitude,
                                 # 'owner_id' : owner_id
-                                'owner' : place_created.owner.id # owner is string attribute of user_id 
+                                'owner_id' : str(place_created.owner_id) # owner is string attribute of user_id 
                                 }
         
         print(place_created_dict)
@@ -117,14 +117,22 @@ class PlaceResource(Resource):
         # Placeholder for the logic to retrieve a place by ID, including associated owner and amenities
         place = facade.get_place(place_id)  # place_list is  place object
 
-        owner = place.owner
-        
+        # owner = place.owner
+        user = place.owner_id
+        owner = facade.get_user_by_id(user)  
+
         amenities_list = []
-        for amenity in place.amenities:
+        # for amenity in place.amenities:
+         
+
+        """ Disabled as amenity reference not working ( error JSON format issue , need many to many relationship)
+        for amenity in place.amenities_r:
             amenities_list.append({
                 'amenity_id': str(amenity.id),
                 'name': amenity.name
             })
+        """
+
 
         output_dict = {
                         'place_id': str(place.id),
@@ -138,7 +146,7 @@ class PlaceResource(Resource):
                         'last_name': owner.last_name,
                         'email': owner.email
             },
-            'amenities': amenities_list
+            'amenities': amenities_list 
            
         }
         
