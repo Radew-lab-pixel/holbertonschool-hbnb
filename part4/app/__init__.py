@@ -9,11 +9,18 @@ from app.api.v1.reviews import api as reviews_ns
 from app.api.v1.auth import api as auth_ns
 from app.api.v1.protected import api as protected_ns
 from flask_cors import CORS
+import os
+
 
 def create_app():
     """ method used to create an app instance """
 
+    # app = Flask(__name__)
+    # add static path for css, js and images
+    # app = Flask(__name__, static_url_path='/static')
     app = Flask(__name__)
+
+   
 
     # Need to add CORS so that we can do API calls in Part 4
     CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
