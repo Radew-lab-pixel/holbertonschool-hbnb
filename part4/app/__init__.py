@@ -17,10 +17,10 @@ def create_app():
 
     # app = Flask(__name__)
     # add static path for css, js and images
-    app = Flask(__name__, static_url_path='/static')
+    # app = Flask(__name__, static_url_path='/static')
+    app = Flask(__name__)
 
-    # Optional: Verify static folder path
-    print("Static folder path:", os.path.join(app.root_path, 'static'))
+   
 
     # Need to add CORS so that we can do API calls in Part 4
     CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
