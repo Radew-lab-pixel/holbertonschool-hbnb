@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Review form handling (Task 4)
+  // Review form handling
   const reviewForm = document.getElementById('review-form');
   const token = checkAuthentication();
   const placeId = getPlaceIdFromURL();
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Login function (unchanged)
+// Login function
 async function loginUser(email, password) {
   const response = await fetch('http://localhost:5000/api/v1/auth/login', {
     method: 'POST',
