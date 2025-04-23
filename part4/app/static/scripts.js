@@ -72,5 +72,4 @@ async function loginUser(email, password) {
 */
   /* const p_url = document.querySelector('div.url_address');
   p_url.append(document.url); */
- 
 
