@@ -18,6 +18,18 @@ document.addEventListener('DOMContentLoaded', () => {
           // Your code to handle form submission
          const email = document.getElementById('email');
          const password = document.getElementById('password');
+
+         if (!email || !password) {
+          alert('Please fill in both email and password fields');
+          return;
+      }
+      
+      try {
+          await loginUser(email, password);
+      } catch (error) {
+          console.error('Login error:', error);
+          alert('Login failed. Please check your credentials and try again.');
+      }
       });
     }
     

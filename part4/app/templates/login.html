@@ -29,13 +29,31 @@
         <input type="password" id="password" placeholder="Password">
         <button type="submit">Login</button>
 
+
+
                     
 </form>
 -->
+<div>
+<form id="login-form">
+    <p id="login-result"></p>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Please enter your email" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Please enter your password" required>
+    </div>
+    <button type="submit" class="login-button">Login</button>
+    <p id="error-message" style="display:none; color: red;"></p>
+</form>
+</div>
+
 <div class id="url-address"></div> <!-- for debugging-->
     <!-- <p>URL address for testing purpose : <span id="url-address"></span></p> -->
     </main>
-    <script src = "./static/scripts.js"></script>
+    <script type="text/javascript" src = "./static/scripts.js"></script>
 </body>
 </html>
 
