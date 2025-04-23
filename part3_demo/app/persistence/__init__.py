@@ -12,6 +12,9 @@ DB = "hbnb_evo_2_db"
 Base = declarative_base()
 
 engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(USER, PWD, HOST, DB))
+
+# Base.metadata.drop_all(engine)  # Delete existing tables (added by Mao)
+
 Base.metadata.create_all(engine)
 session_factory = sessionmaker(
     bind=engine, expire_on_commit=False)
