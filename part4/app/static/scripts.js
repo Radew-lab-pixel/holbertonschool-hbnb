@@ -1,64 +1,16 @@
-// app/static/js/scripts.js
+/* 
+  This is a SAMPLE FILE to get you started.
+  Please, follow the project instructions to complete the tasks.
+*/
 
-// Get cookie by name
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-  return null;
-}
-
-// Get place ID from URL
-function getPlaceIdFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get('place_id');
-}
-
-// Check authentication and redirect if unauthenticated
-function checkAuthentication() {
-  const token = getCookie('token');
-  if (!token) {
-    window.location.href = '/index.html';
-  }
-  return token;
-}
-
-// Submit review to API
-async function submitReview(token, placeId, text, rating) {
-  try {
-    const response = await fetch('http://localhost:5000/api/v1/reviews', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        place_id: placeId,
-        text: text,
-        rating: parseInt(rating) // Ensure rating is an integer
-      })
-    });
-
-    if (response.ok) {
-      return { success: true, data: await response.json() };
-    } else {
-      const error = await response.json();
-      throw new Error(error.message || 'Failed to submit review');
-    }
-  } catch (error) {
-    throw new Error(error.message || 'Network error');
-  }
-}
-
-// Existing login code
 document.addEventListener('DOMContentLoaded', () => {
   // Login form handling
   const loginForm = document.getElementById('login-form');
   if (loginForm) {
     loginForm.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const email = document.getElementById('email').value; // Changed to .value
-      const password = document.getElementById('password').value; // Changed to .value
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
 
       if (!email || !password) {
         alert('Please fill in both email and password fields');
@@ -76,41 +28,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Review form handling
   const reviewForm = document.getElementById('review-form');
-  const token = checkAuthentication();
-  const placeId = getPlaceIdFromURL();
-
-  if (reviewForm && token && placeId) {
+  if (reviewForm) {
     reviewForm.addEventListener('submit', async (event) => {
       event.preventDefault();
-
+      // Get review text
       const reviewText = document.getElementById('review').value;
+      // Get rating
       const rating = document.getElementById('rating').value;
-
+      // Check if empty
       if (!reviewText || !rating) {
-        alert('Please fill in both review and rating fields');
+        alert('Please fill in all fields');
         return;
       }
-
+      // Get placeId
+      const placeId = getPlaceIdFromURL();
+      // Check token
+      const token = checkAuthentication();
       try {
+        //Send review to API
         const result = await submitReview(token, placeId, reviewText, rating);
-        alert('Review submitted successfully!');
-        reviewForm.reset();
+        handleResponse(result);
       } catch (error) {
-        alert(`Error: ${error.message}`);
+        handleResponse(null, error);
       }
     });
   }
 
-  // URL display for debugging
+  // Debugging URL display
   const urlDisplayElement = document.getElementById('url-address');
   if (urlDisplayElement) {
     urlDisplayElement.textContent = `Current URL: ${window.location.href}`;
   }
 });
 
-// Login function
 async function loginUser(email, password) {
-  const response = await fetch('http://localhost:5000/api/v1/auth/login', {
+  const response = await fetch('http://127.0.0.1:5000/api/v1/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -123,6 +75,91 @@ async function loginUser(email, password) {
     document.cookie = `token=${data.access_token}; path=/`;
     window.location.href = '/index.html';
   } else {
-    throw new Error('Login failed: ' + response.statusText);
+    alert('Login failed: ' + response.statusText);
+  }
+}
+
+function getPlaceIdFromURL() {
+  // Get the query string
+  const queryString = window.location.search;
+  // Create URLSearchParams
+  const params = new URLSearchParams(queryString);
+  // Get place_id
+  const placeId = params.get('place_id');
+  // Return it
+  return placeId;
+}
+
+function getCookie(name) {
+  // Input validation
+  if (!name || !document.cookie) {
+    return null;
+  }
+  // Get all cookies
+  const cookieString = `; ${document.cookie}`;
+  // Split into individual cookies
+  const cookies = cookieString.split('; ');
+  // Find the cookie with name
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim();
+    if (cookie.startsWith(name + '=')) {
+      const value = cookie.substring(name.length + 1);
+      return value ? decodeURIComponent(value) : '';
+    }
+  }
+  return null;
+}
+
+function checkAuthentication() {
+  const token = getCookie('token');
+  if (!token) {
+    window.location.href = '/index.html';
+  }
+  return token;
+}
+
+async function submitReview(token, placeId, reviewText, rating) {
+  // Input validation
+  if (!token || !placeId || !reviewText || isNaN(parseInt(rating))) {
+    throw new Error('Invalid input parameters');
+  }
+  try {
+    // Create POST request
+    const response = await fetch('http://localhost:5000/api/v1/reviews', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        place_id: placeId,
+        text: reviewText,
+        rating: parseInt(rating)
+      })
+    });
+    // Check response
+    if (response.ok) {
+      // Parse and return JSON
+      return { success: true, data: await response.json() };
+    } else {
+      // Throw error
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to submit review');
+    }
+  }
+  catch (error) {
+    throw new Error(error.message || 'Network error');
+  }
+}
+
+function handleResponse(response, error) {
+  if (response !== null && response.success === true) {
+    // Show success message
+    alert('Review submitted successfully!');
+    // Clear form
+    document.getElementById('review-form').reset();
+  } else {
+    // Show error message
+    alert(error && error.message ? error.message : 'Failed to submit review');
   }
 }
