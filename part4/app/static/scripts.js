@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function loginUser(email, password) {
-  const response = await fetch('http://127.0.0.1:5000/api/v1/auth/login', {
+  const response = await fetch('http://localhost:5001/api/v1/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -72,8 +72,8 @@ async function loginUser(email, password) {
 
   if (response.ok) {
     const data = await response.json();
-    document.cookie = `token=${data.access_token}; path=/`;
-    window.location.href = '/index.html';
+    document.cookie = `token=${data.access_token}; path=/; SameSite=Lax`;
+    window.location.href = '/';
   } else {
     alert('Login failed: ' + response.statusText);
   }
@@ -119,13 +119,11 @@ function checkAuthentication() {
 }
 
 async function submitReview(token, placeId, reviewText, rating) {
-  // Input validation
   if (!token || !placeId || !reviewText || isNaN(parseInt(rating))) {
     throw new Error('Invalid input parameters');
   }
   try {
-    // Create POST request
-    const response = await fetch('http://localhost:5000/api/v1/reviews', {
+    const response = await fetch('http://localhost:5001/api/v1/reviews', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -137,17 +135,13 @@ async function submitReview(token, placeId, reviewText, rating) {
         rating: parseInt(rating)
       })
     });
-    // Check response
     if (response.ok) {
-      // Parse and return JSON
       return { success: true, data: await response.json() };
     } else {
-      // Throw error
       const error = await response.json();
       throw new Error(error.message || 'Failed to submit review');
     }
-  }
-  catch (error) {
+  } catch (error) {
     throw new Error(error.message || 'Network error');
   }
 }

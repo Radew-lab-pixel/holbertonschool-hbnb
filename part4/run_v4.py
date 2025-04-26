@@ -11,7 +11,7 @@ from app.api.v1.protected import api as protected_ns
 from flask_cors import CORS
 import os
 
-# app = create_app()
+app = create_app()
 
 # app = Flask(__name__)
 
@@ -70,7 +70,8 @@ def login():
 
 @app.route('/place')
 def place():
-    return render_template('place.html')
+    place_id = request.args.get('place_id', 'default_id')  # Adjust as needed
+    return render_template('place.html', place_id=place_id)
 
 @app.route('/add_review')
 def add_review():
@@ -78,5 +79,5 @@ def add_review():
 
 if __name__ == '__main__':
     # app.run(debug=True)
-    app.run(host='localhost', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)
     # app.run(host='localhost', port=5500, debug=True)
