@@ -73,7 +73,7 @@ async function loginUser(email, password) {
   if (response.ok) {
     const data = await response.json();
     document.cookie = `token=${data.access_token}; path=/`;
-    window.location.href = '/index.html';
+    window.location.href = '/';
   } else {
     alert('Login failed: ' + response.statusText);
   }
