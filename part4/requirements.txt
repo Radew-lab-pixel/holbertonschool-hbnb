@@ -3,5 +3,9 @@ flask-restx
 flask-jwt-extended
 sqlalchemy
 flask-sqlalchemy
+<<<<<<< HEAD
 flask_bcrypt
 flask_cors
+=======
+flask-cors
+>>>>>>> upstream/master

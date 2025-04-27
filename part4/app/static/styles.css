@@ -30,3 +30,9 @@ nav a {
 main {
     padding: 2rem;
 }
+
+.places-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
