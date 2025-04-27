@@ -22,6 +22,8 @@ function checkAuthentication() {
     }
 }
 
+
+
 function getCookie(name) {
     // Function to get a cookie value by its name
     let decodedCookie = decodeURIComponent(document.cookie);

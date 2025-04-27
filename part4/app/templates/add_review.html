@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Review</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./static/styles.css">
     <!-- <script src="./static/place.js"></script> -->
     <script src="./static/review.js"></script>
 </head>
@@ -13,10 +13,10 @@
         <!-- Add something to idfentify the place you're reviewing -->
         <form id="review-form">
             <h2>Add a Review</h2>
-            <label for="review">Your Review:</label>
-            <textarea id="review" name="review" required></textarea>
-            <label for="rating">Rating:</label>
-            <select id="rating" name="rating" required>
+            <label for="review-text">Your Review:</label>
+            <textarea id="review-text" name="review" required></textarea>
+            <label for="review-rating">Rating:</label>
+            <select id="review-rating" name="rating" required>
                 <!-- Options for rating -->
                  <option value="1">⭐</option>
                  <option value="2">⭐⭐</option>
@@ -28,5 +28,5 @@
         </form>
     </main>
     <script src="./static/scripts.js"></script>
-</body>
+</body> 
 </html>
