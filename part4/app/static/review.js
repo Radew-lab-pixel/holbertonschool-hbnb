@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const token = checkAuthentication();
     const placeId = getPlaceIdFromURL();
+    console.log('Token : ${token}, placeId : ${placeId}');
     
     // checkAuthenication() and getPlaceIdFromURL() from place.js to be imported in add_review.html
 
