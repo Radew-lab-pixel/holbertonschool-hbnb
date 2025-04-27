@@ -13,9 +13,9 @@ function checkAuthentication() {
 // // Separate function to get place ID
 function getPlaceIdFromURL() {
   const params = new URLSearchParams(window.location.search);
-  const placeId = params.get('place_id');
-  console.log(`placeId: ${placeId}`);
-  // const placeId = "afeee614-70e4-4e5c-adc0-95c9964c1ddd";
+//   const placeId = params.get('place_id');
+//   console.log(`placeId: ${placeId}`);
+  const placeId = "afeee614-70e4-4e5c-adc0-95c9964c1ddd";
   if (!placeId) {
       console.error('No place_id found in URL');
       // Optionally redirect or show error

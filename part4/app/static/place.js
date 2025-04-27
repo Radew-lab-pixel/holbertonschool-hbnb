@@ -91,3 +91,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     displayPlaceDetails(place);
 });
+
+// document.getElementById('add-review').onclick = () => {
+//     const placeId = getPlaceIdFromURL(); // Your function to get the ID
+//     location.href = `add_review.html?place_id=${placeId}`;
+//   };
+
