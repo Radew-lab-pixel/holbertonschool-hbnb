@@ -7,7 +7,7 @@
     <!-- <link rel="stylesheet" href="styles.css"> -->
     <link rel="stylesheet" href="./static/styles.css"> 
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"-->
-    
+    <script src="./static/index.js"></script>
 </head>
 <body>
     <header>
@@ -27,22 +27,30 @@
         <section id="filter">
             <label for="price-filter">Max Price:</label>
             <select id="price-filter">
-                <!-- Options will be populated dynamically -->
+                <option value="1">$1</option>
+                <option value="10">$10</option>
+                <option value="50">$50</option>
+                <option value="100">$100</option>
+                <option value="200">$200</option>
+                <option value="300">$300</option>
+                <option value="Infinity">All</option>
             </select>
         </section>
-        <section id="places-list">
+        <section id="places-list" class="places-list">
             <!-- List of places will be populated dynamically -->
             <div class="place-card">
-            <!-- <h1><img src="./static/images/house1.jpg" alt="house" width="140" height="80"> House 1</h1> -->
-            <h1><img src="{{ url_for('static', filename='images/house1.jpg') }}" alt="House 1"></div></h1>
-            <p>AU $150 per night</p>
-            <!-- <a href="./place.html" class="details-button">View Details</a> -->
-            <a href="./place" class="details-button">View Details</a>
-            <br><br>
-            <h1><img src="{{ url_for('static', filename='images/house2.jpg') }}" alt="House 1"></div></h1>
-            <p>AU $180 per night</p>
-            <a href="./place" class="details-button">View Details</a>      
-        
+                <h1>New house by the sea</h1>
+                <img src="{{ url_for('static', filename='images/house1.jpg') }}" alt="House 1">
+                <p>AU $<span class="price">150</span> per night</p>
+                <!-- <a href="./place.html" class="details-button">View Details</a> -->
+                <a href="./place?place_id=1" class="details-button">View Details</a>
+            </div>
+            <div class="place-card">
+                <h1>Tent</h1>
+                <img src="{{ url_for('static', filename='images/house2.jpg') }}" alt="House 2">
+                <p>AU $<span class="price">180</span> per night</p>
+                <a href="./place?place_id=2" class="details-button">View Details</a>
+            </div>
         </div>
         </section>
     </main>

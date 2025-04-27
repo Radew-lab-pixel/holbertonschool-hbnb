@@ -1,16 +1,5 @@
-/* 
-  This is a SAMPLE FILE to get you started.
-  Please, follow the project instructions to complete the tasks.
-*/
-
-// document.addEventListener('DOMContentLoaded', () => {
-    /* DO SOMETHING */
-//  });
-
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('login-form');
-
-  //const p_url = document.getElementById('')
 
   if (loginForm) {
       loginForm.addEventListener('submit', async (event) => {
@@ -22,16 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
          if (!email || !password) {
           alert('Please fill in both email and password fields');
           return;
-        }
-
-        try {
+      }
+      
+      try {
           await loginUser(email, password);
       } catch (error) {
           console.error('Login error:', error);
           alert('Login failed. Please check your credentials and try again.');
       }
-      
-      
       });
     }
     
@@ -55,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 async function loginUser(email, password) {
-  console.log(email, password)
   //const response = await fetch('http://127.0.0.1:5500/api/v1/auth/login', {
   const response = await fetch('http://127.0.0.1:5000/api/v1/auth/login', {
       method: 'POST',
@@ -67,15 +53,12 @@ async function loginUser(email, password) {
   // Handle the response
   if (response.ok) {
     const data = await response.json();
-    // document.cookie = `token=${data.access_token}; path=/`;
     const expires = (new Date(Date.now()+ 86400*1000)).toUTCString();
     document.cookie = `token=${data.access_token}; path=/; Secure; SameSite=Strict; expires=${expires};`;
     window.location.href = '/';
 } else {
     alert('Login failed: ' + response.statusText);
 }
-
-
 }
 
 

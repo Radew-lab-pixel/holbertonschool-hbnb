@@ -138,12 +138,14 @@ class PlaceResource(Resource):
         if not place:
             return {'error': 'Place not found'}, 404
 
-        owner = place.owner
+        owner_id = place.owner_id
+
+        owner = facade.get_user(owner_id)
         if not owner:
             return {'error': 'Place owner not found'}, 404
 
         amenities_list = []
-        for amenity in place.amenities:
+        for amenity in place.amenities_r:
             amenities_list.append({
                 'id': str(amenity.id),
                 'name': amenity.name
@@ -155,6 +157,7 @@ class PlaceResource(Resource):
             'description': place.description,
             'latitude': place.latitude,
             'longitude': place.longitude,
+            'price': place.price,
             'owner': {
                 'id': str(owner.id),
                 'first_name': owner.first_name,

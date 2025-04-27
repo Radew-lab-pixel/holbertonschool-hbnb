@@ -24,12 +24,8 @@ class Login(Resource):
         """Authenticate user and return a JWT token"""
         credentials = api.payload  # Get the email and password from the request payload
 
-        print(credentials)
-
         # Step 1: Retrieve the user based on the provided email
         user = facade.get_user_by_email(credentials['email'])
-
-        print(user)
 
         # Step 2: Check if the user exists and the password is correct
         if not user or not user.verify_password(credentials['password']):
