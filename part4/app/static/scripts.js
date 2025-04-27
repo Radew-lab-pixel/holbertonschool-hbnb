@@ -1,23 +1,12 @@
-/* 
-  This is a SAMPLE FILE to get you started.
-  Please, follow the project instructions to complete the tasks.
-*/
-
-// document.addEventListener('DOMContentLoaded', () => {
-    /* DO SOMETHING */
-//  });
-
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('login-form');
-
-  //const p_url = document.getElementById('')
 
   if (loginForm) {
       loginForm.addEventListener('submit', async (event) => {
           event.preventDefault();
           // Your code to handle form submission
-         const email = document.getElementById('email');
-         const password = document.getElementById('password');
+         const email = document.getElementById('email').value;
+         const password = document.getElementById('password').value;
 
          if (!email || !password) {
           alert('Please fill in both email and password fields');
@@ -64,8 +53,9 @@ async function loginUser(email, password) {
   // Handle the response
   if (response.ok) {
     const data = await response.json();
-    document.cookie = `token=${data.access_token}; path=/`;
-    window.location.href = 'index.html';
+    const expires = (new Date(Date.now()+ 86400*1000)).toUTCString();
+    document.cookie = `token=${data.access_token}; path=/; Secure; SameSite=Strict; expires=${expires};`;
+    window.location.href = '/';
 } else {
     alert('Login failed: ' + response.statusText);
 }

@@ -12,7 +12,7 @@ async function populatePlaces() {
         // <div class="place-card">
         //     <!-- <h1><img src="./static/images/house1.jpg" alt="house" width="140" height="80"> House 1</h1> -->
         //     <h1><img src="{{ url_for('static', filename='images/house1.jpg') }}" alt="House 1"></h1>
-        //     <p150</p>
+        //     <p>AU $<span class="price">150</span> per night</p>
         //     <!-- <a href="./place.html" class="details-button">View Details</a> -->
         //     <a href="./place" class="details-button">View Details</a>
         // </div>
@@ -28,7 +28,7 @@ async function populatePlaces() {
         img.alt = "House Image"
 
         const p = document.createElement("p");
-        p.innerHTML = place.price;
+        p.innerHTML = `AU $<span class='price'>${place.price}</span> per night`;
 
         const a = document.createElement("a");
         a.className = "details-button"
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const placesList = document.getElementById("places-list");
 
         placesList.querySelectorAll(".place-card").forEach((card) => {
-            const priceTag = card.querySelector("p");
+            const priceTag = card.querySelector(".price");
 
             const price = priceTag.innerHTML.trim();
 
