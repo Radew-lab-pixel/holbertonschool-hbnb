@@ -10,6 +10,7 @@ from app.api.v1.auth import api as auth_ns
 from app.api.v1.protected import api as protected_ns
 from flask_cors import CORS
 import os
+from flask import request
 
 app = create_app()
 
