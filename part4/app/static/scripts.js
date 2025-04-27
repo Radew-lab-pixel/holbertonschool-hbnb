@@ -1,57 +1,61 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Login form handling
   const loginForm = document.getElementById('login-form');
-
   if (loginForm) {
     loginForm.addEventListener('submit', async (event) => {
       event.preventDefault();
-      // Your code to handle form submission
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
-
       if (!email || !password) {
         alert('Please fill in both email and password fields');
         return;
       }
-
       try {
         await loginUser(email, password);
       } catch (error) {
         console.error('Login error:', error);
-        alert('Login failed. Please check your credentials and try again.');
+        alert('Login failed: ' + error.message);
       }
     });
   }
 
-  // Review form handling
   const reviewForm = document.getElementById('review-form');
   if (reviewForm) {
     reviewForm.addEventListener('submit', async (event) => {
       event.preventDefault();
-      // Get review text
       const reviewText = document.getElementById('review').value;
-      // Get rating
       const rating = document.getElementById('rating').value;
-      // Check if empty
       if (!reviewText || !rating) {
         alert('Please fill in all fields');
         return;
       }
-      // Get placeId
+      if (reviewText.length < 10) {
+        alert('Review text must be at least 10 characters long');
+        return;
+      }
+      if (reviewText.length > 50) {
+        alert('Review text must be less than 50 characters long');
+        return;
+      }
+      if (!/^[a-zA-Z\s]+$/.test(reviewText)) {
+        alert('Review text must contain only letters and spaces');
+        return;
+      }
       const placeId = getPlaceIdFromURL();
-      // Check token
       const token = checkAuthentication();
       try {
-        //Send review to API
         const result = await submitReview(token, placeId, reviewText, rating);
         handleResponse(result);
       } catch (error) {
-        handleResponse(null, error);
+        if (error.message.includes('401') || error.message.includes('Unauthorized')) {
+          alert('Session expired. Please log in again.');
+          window.location.href = '/login';
+        } else {
+          handleResponse(null, error);
+        }
       }
     });
   }
 
-  // Debugging URL display
   const urlDisplayElement = document.getElementById('url-address');
   if (urlDisplayElement) {
     urlDisplayElement.textContent = `Current URL: ${window.location.href}`;
@@ -59,45 +63,47 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function loginUser(email, password) {
-  const response = await fetch('http://localhost:5001/api/v1/auth/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ email, password })
-  });
-
-  if (response.ok) {
-    const data = await response.json();
-    const expires = (new Date(Date.now() + 86400 * 1000)).toUTCString();
-    document.cookie = `token=${data.access_token}; path=/; Secure; SameSite=Strict; expires=${expires};`;
-    window.location.href = '/';
-  } else {
-    alert('Login failed: ' + response.statusText);
+  console.log('Attempting login with:', { email, password });
+  try {
+    const response = await fetch('http://localhost:5001/api/v1/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    });
+    console.log('Login response status:', response.status);
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Login response data:', data);
+      const expires = (new Date(Date.now() + 86400 * 1000)).toUTCString();
+      document.cookie = `token=${data.access_token}; path=/; Secure; SameSite=Strict; expires=${expires};`;
+      console.log('Token set, redirecting to /');
+      window.location.href = '/';
+    } else {
+      const error = await response.json();
+      console.error('Login failed with error:', error);
+      throw new Error(error.message || response.statusText);
+    }
+  } catch (error) {
+    console.error('Network or fetch error:', error);
+    throw new Error(error.message || 'Network error during login');
   }
 }
 
 function getPlaceIdFromURL() {
-  // Get the query string
   const queryString = window.location.search;
-  // Create URLSearchParams
   const params = new URLSearchParams(queryString);
-  // Get place_id
   const placeId = params.get('place_id');
-  // Return it
   return placeId;
 }
 
 function getCookie(name) {
-  // Input validation
   if (!name || !document.cookie) {
     return null;
   }
-  // Get all cookies
   const cookieString = `; ${document.cookie}`;
-  // Split into individual cookies
   const cookies = cookieString.split('; ');
-  // Find the cookie with name
   for (let i = 0; i < cookies.length; i++) {
     const cookie = cookies[i].trim();
     if (cookie.startsWith(name + '=')) {
@@ -111,7 +117,7 @@ function getCookie(name) {
 function checkAuthentication() {
   const token = getCookie('token');
   if (!token) {
-    window.location.href = '/index.html';
+    window.location.href = '/';
   }
   return token;
 }
@@ -137,7 +143,7 @@ async function submitReview(token, placeId, reviewText, rating) {
       return { success: true, data: await response.json() };
     } else {
       const error = await response.json();
-      throw new Error(error.message || 'Failed to submit review');
+      throw new Error(error.error || response.status.toString());
     }
   } catch (error) {
     throw new Error(error.message || 'Network error');
@@ -146,12 +152,9 @@ async function submitReview(token, placeId, reviewText, rating) {
 
 function handleResponse(response, error) {
   if (response !== null && response.success === true) {
-    // Show success message
     alert('Review submitted successfully!');
-    // Clear form
     document.getElementById('review-form').reset();
   } else {
-    // Show error message
     alert(error && error.message ? error.message : 'Failed to submit review');
   }
 }

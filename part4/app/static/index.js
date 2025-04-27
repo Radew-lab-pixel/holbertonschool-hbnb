@@ -1,53 +1,49 @@
-
 async function populatePlaces() {
-    // Fetch all places
-    const data = await fetch("http://127.0.0.1:5000/api/v1/places", {
-        method: "GET",
-    })
-    .then((res) => res.json());
+    try {
+        const response = await fetch("http://localhost:5001/api/v1/places", {
+            method: "GET",
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Fetched places:", data);
 
-    console.log(data);
+        for (const place of data) {
+            const card = document.createElement("div");
+            card.className = "place-card";
 
-    for (const place of data) {
-        // <div class="place-card">
-        //     <!-- <h1><img src="./static/images/house1.jpg" alt="house" width="140" height="80"> House 1</h1> -->
-        //     <h1><img src="{{ url_for('static', filename='images/house1.jpg') }}" alt="House 1"></h1>
-        //     <p>AU $<span class="price">150</span> per night</p>
-        //     <!-- <a href="./place.html" class="details-button">View Details</a> -->
-        //     <a href="./place" class="details-button">View Details</a>
-        // </div>
+            const h1 = document.createElement("h1");
+            h1.innerHTML = place.title;
 
-        const card = document.createElement("div");
-        card.className = "place-card";
+            const img = document.createElement("img");
+            img.src = `/static/images/${place.image}`;  // Use the image from the API
+            img.alt = "House Image";
 
-        const h1 = document.createElement("h1");
-        h1.innerHTML = place.title;
+            const p = document.createElement("p");
+            p.innerHTML = `AU $<span class='price'>${place.price}</span> per night`;
 
-        const img = document.createElement("img");
-        img.src = "/static/images/house1.jpg";
-        img.alt = "House Image"
+            const a = document.createElement("a");
+            a.className = "details-button";
+            a.innerHTML = "View Details";
+            a.href = `/place?place_id=${place.id}`;
 
-        const p = document.createElement("p");
-        p.innerHTML = `AU $<span class='price'>${place.price}</span> per night`;
+            card.appendChild(h1);
+            card.appendChild(img);
+            card.appendChild(p);
+            card.appendChild(a);
 
-        const a = document.createElement("a");
-        a.className = "details-button"
-        a.innerHTML = "View Details";
-        a.href = `/place?place_id=${place.id}`;
+            document.getElementById("places-list").appendChild(card);
+        }
 
-        card.appendChild(h1);
-        card.appendChild(img);
-        card.appendChild(p);
-        card.appendChild(a);
-
-        document.getElementById("places-list").appendChild(card);
+        return data;
+    } catch (error) {
+        console.error("Error fetching places:", error);
+        return [];
     }
-
-    return data;
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-    // Populate places
     await populatePlaces();
 
     const filterElement = document.getElementById("price-filter");
@@ -60,15 +56,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         placesList.querySelectorAll(".place-card").forEach((card) => {
             const priceTag = card.querySelector(".price");
 
-            const price = priceTag.innerHTML.trim();
+            const price = Number(priceTag.innerHTML.trim());
 
             if (price > maxPrice) {
-                // Hide card
                 card.style.display = "none";
             } else {
-                // Show card
                 card.style.display = "block";
             }
-        })
-    })
+        });
+    });
 });
