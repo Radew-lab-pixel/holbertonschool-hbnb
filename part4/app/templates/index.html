@@ -7,7 +7,7 @@
     <!-- <link rel="stylesheet" href="styles.css"> -->
     <link rel="stylesheet" href="./static/styles.css"> 
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"-->
-    
+    <script src="./static/index.js"></script>
 </head>
 <body>
     <header>
@@ -27,22 +27,28 @@
         <section id="filter">
             <label for="price-filter">Max Price:</label>
             <select id="price-filter">
+                <option value="1">$1</option>
+                <option value="150">$150</option>
+                <option value="180">$180</option>
+                <option value="1000">$1000</option>
                 <!-- Options will be populated dynamically -->
             </select>
         </section>
         <section id="places-list">
             <!-- List of places will be populated dynamically -->
             <div class="place-card">
-            <!-- <h1><img src="./static/images/house1.jpg" alt="house" width="140" height="80"> House 1</h1> -->
-            <h1><img src="{{ url_for('static', filename='images/house1.jpg') }}" alt="House 1"></div></h1>
-            <p>AU $150 per night</p>
-            <!-- <a href="./place.html" class="details-button">View Details</a> -->
-            <a href="./place" class="details-button">View Details</a>
+                <!-- <h1><img src="./static/images/house1.jpg" alt="house" width="140" height="80"> House 1</h1> -->
+                <h1><img src="{{ url_for('static', filename='images/house1.jpg') }}" alt="House 1"></h1>
+                <p>150</p>
+                <!-- <a href="./place.html" class="details-button">View Details</a> -->
+                <a href="./place?place_id=1" class="details-button">View Details</a>
+            </div>
             <br><br>
-            <h1><img src="{{ url_for('static', filename='images/house2.jpg') }}" alt="House 1"></div></h1>
-            <p>AU $180 per night</p>
-            <a href="./place" class="details-button">View Details</a>      
-        
+            <div class="place-card">
+                <h1><img src="{{ url_for('static', filename='images/house2.jpg') }}" alt="House 2"></h1>
+                <p>180</p>
+                <a href="./place?place_id=2" class="details-button">View Details</a>
+            </div>
         </div>
         </section>
     </main>
