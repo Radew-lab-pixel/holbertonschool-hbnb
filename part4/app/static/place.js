@@ -90,6 +90,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log(place);
 
     displayPlaceDetails(place);
+
+
+    document.getElementById("add-review-button").addEventListener("click", () => {
+        window.location.href = `/add_review?place_id=${placeId}`;
+    })
 });
 
 // document.getElementById('add-review').onclick = () => {

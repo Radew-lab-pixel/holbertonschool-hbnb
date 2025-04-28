@@ -17,7 +17,7 @@ review_model = api.model('Review', {
 
 @api.route('/')
 class ReviewList(Resource):
-    @api.expect(review_model)
+    # @api.expect(review_model)
     @api.response(201, 'Review successfully created')
     @api.response(400, 'Invalid input data')
     @api.response(400, 'You cannot review your own place.')
